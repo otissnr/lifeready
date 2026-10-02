@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Master Wellbeing & Longevity Library</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Lora', 'serif'],
+                        title: ['Cinzel', 'serif']
+                    },
+                    colors: {
+                        brand: {
+                            red: '#D93829',
+                            cream: '#FAF7F2',
+                            sand: '#EFEAE1',
+                            dark: '#1C1917',
+                            sage: '#4A6B5B',
+                            slate: '#332F2C'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 3px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-brand-cream text-brand-slate dark:bg-stone-950 dark:text-stone-200 font-sans antialiased min-h-screen flex flex-col transition-colors duration-200">
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-brand-cream/90 dark:bg-stone-900/90 backdrop-blur-md border-b border-brand-sand/80 dark:border-stone-800 shadow-sm transition-colors duration-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="selectBook('flourish')">
+                <span class="text-2xl text-brand-red font-serif font-bold">🌿</span>
+                <div>
+                    <h1 class="text-lg font-title font-bold text-brand-dark dark:text-stone-100 tracking-tight leading-tight">Wellbeing Library</h1>
+                    <p class="text-xs text-stone-500 dark:text-stone-400 font-serif italic hidden sm:block">Master Summaries on Joy, Purpose & Longevity</p>
+                </div>
+            </div>
+
+            <!-- Search & Dark Mode Controls -->
+            <div class="flex items-center space-x-3">
+                <div class="relative hidden sm:block">
+                    <input type="text" id="searchInput" oninput="filterBooks()" placeholder="Search book, author, topic..." 
+                           class="w-48 md:w-64 pl-9 pr-3 py-1.5 text-xs rounded-full bg-white dark:bg-stone-800 border border-stone-300 dark:border-stone-700 text-stone-800 dark:text-stone-200 focus:outline-none focus:ring-2 focus:ring-brand-red/50">
+                    <svg class="w-4 h-4 absolute left-3 top-2 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-stone-200 dark:hover:bg-stone-800 text-stone-600 dark:text-stone-300 transition-colors" title="Toggle Theme">
+                    <svg id="sunIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg id="moonIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container Layout -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 flex flex-col md:flex-row gap-8 w-full">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-80 flex-shrink-0">
+            <div class="sticky top-20 bg-white dark:bg-stone-900 border border-brand-sand dark:border-stone-800 rounded-2xl p-4 shadow-sm max-h-[calc(100vh-6rem)] flex flex-col">
+                <div class="mb-3 px-2 flex justify-between items-center">
+                    <h2 class="text-xs font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider">Pillars & Books</h2>
+                    <span id="bookCountBadge" class="text-xs bg-brand-sand dark:bg-stone-800 text-brand-dark dark:text-stone-300 font-semibold px-2 py-0.5 rounded-full">18 Books</span>
+                </div>
+
+                <div id="bookListNav" class="space-y-4 overflow-y-auto custom-scrollbar flex-1 pr-1">
+                    <!-- Dynamic rendering of sidebar buttons -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Display Content View -->
+        <main class="flex-1 min-w-0">
+            <div id="bookDetailView" class="bg-white dark:bg-stone-900 border border-brand-sand dark:border-stone-800 rounded-2xl p-6 sm:p-10 shadow-sm relative">
+                <!-- Book content injected dynamically -->
+            </div>
+        </main>
+    </div>
+
+<script>
+const BOOKS = {
+    flourish: {
+        id: "flourish",
+        title: "Flourish",
+        subtitle: "A Visionary New Understanding of Happiness and Well-being",
+        author: "Martin Seligman",
+        pillar: "Joy",
+        pillarIcon: "✨",
+        color: "amber",
+        tag: "Positive Psychology & Wellbeing",
+        overview: "In *Flourish*, positive psychology founder Martin Seligman moves beyond traditional views of happiness to introduce the PERMA model—a framework defining human wellbeing through Positive Emotion, Engagement, Relationships, Meaning, and Accomplishment. The book argues that true human flourishing requires cultivating all five dimensions, offering practical exercises to increase resilience and vitality across life.",
+        chapters: [
+            { title: "Chapter 1: What is Wellbeing?", summary: "Seligman transitions from his original Authentic Happiness theory to Wellbeing Theory. He establishes that happiness is not merely positive mood, but a construct composed of five measurable pillars (PERMA). Increasing PERMA leads to human flourishing." },
+            { title: "Chapter 2: Creating Your Happiness", summary: "Focuses on evidence-based positive interventions. Seligman demonstrates exercises like 'Three Good Things' and the 'Gratitude Visit,' showing how intentional practices permanently raise baseline wellbeing and buffer against depression." },
+            { title: "Chapter 3: The Dirty Little Secret of Drugs and Therapy", summary: "Examines the limits of traditional psychopharmacology and psychotherapy. While drugs offer symptom management, positive interventions actively build psychological assets, positive emotion, and durable character strengths." },
+            { title: "Chapter 4: Teaching Wellbeing in Schools", summary: "Presents Penn Resiliency Program implementations in schools globally. Teaching youth positive emotion, emotional regulation, and grit yields academic gains, reduced anxiety, and stronger social bonds." },
+            { title: "Chapter 5: Post-Traumatic Growth", summary: "Explores how severe adversity and trauma often catalyze profound personal transformation, increased mental toughness, deeper appreciation for life, and enriched relationships when paired with structured processing." },
+            { title: "Chapter 6: Comprehensive Soldier Fitness", summary: "Outlines the U.S. Army initiative designed to train soldiers in psychological fitness, emotional endurance, and character strengths, preventing PTSD and creating a culture of proactive mental wellness." },
+            { title: "Chapter 7: Character Strengths & Virtues", summary: "Details the VIA (Values in Action) classification system. Identifying and daily utilizing one's core signature strengths fosters deep engagement, authentic self-expression, and sustainable achievement." },
+            { title: "Chapter 8: Positive Health & Fitness", summary: "Examines biological markers of positive health. High wellbeing directly correlates with cardiovascular vitality, stronger immune function, lower mortality rates, and faster recovery from physical illness." },
+            { title: "Chapter 9: The Economics of Wellbeing", summary: "Proposes that national success should be measured by Wellbeing Metrics (Gross National Wellbeing) rather than exclusively by GDP, steering policy toward public health, trust, and human flourishing." },
+            { title: "Chapter 10: The Future of Flourishing", summary: "Concludes with a vision for the year 2051, where 51% of the global population is flourishing through integrated positive education, workplace wellbeing programs, and intentional living." }
+        ],
+        takeaways: [
+            "Wellbeing consists of 5 elements: Positive Emotion, Engagement, Relationships, Meaning, and Accomplishment (PERMA).",
+            "Gratitude exercises like 'Three Good Things' rewires brain circuitry toward optimism and resilience.",
+            "Trauma does not automatically lead to PTSD; with proper mindset tools, it often catalyzes Post-Traumatic Growth.",
+            "Using signature character strengths daily creates flow and deep existential satisfaction."
+        ]
+    },
+
+    joyful: {
+        id: "joyful",
+        title: "Joyful",
+        subtitle: "The Surprising Power of Ordinary Things to Create Extraordinary Happiness",
+        author: "Ingrid Fetell Lee",
+        pillar: "Joy",
+        pillarIcon: "🌈",
+        color: "amber",
+        tag: "Environment & Aesthetics",
+        overview: "Designer Ingrid Fetell Lee explores how the physical world around us profoundly influences our emotional state. *Joyful* identifies ten aesthetic aesthetics of joy—such as energy, abundance, freedom, and harmony—and illustrates how subtle changes in color, light, shape, and spatial design can awaken joy in daily life.",
+        chapters: [
+            { title: "Chapter 1: Energy (Vibrant Color & Light)", summary: "Examines how bright colors and natural sunlight stimulate nervous system arousal, elevating mood and vitality while dispelling environmental monotony." },
+            { title: "Chapter 2: Abundance (Sensory Richness)", summary: "Explores how variety, texture, and playful collections spark feelings of safety, wealth, and childlike fascination within space." },
+            { title: "Chapter 3: Freedom (Wildness & Open Space)", summary: "Demonstrates the psychological power of nature, open horizons, and unconstrained movement in reducing cognitive fatigue and anxiety." },
+            { title: "Chapter 4: Harmony (Order & Symmetry)", summary: "Looks at how geometric patterns, rhythm, and structural balance reduce cognitive processing friction, creating a sense of peace." },
+            { title: "Chapter 5: Play (Curves & Circles)", summary: "Reveals that angular shapes trigger unconscious threat responses, whereas rounded, soft edges invite tactile engagement and playful interaction." },
+            { title: "Chapter 6: Surprise (Pop-ups & Unexpected Delight)", summary: "Analyzes how unexpected humor, giant scale, or hidden artistic elements trigger dopamine hits and break habitual cognitive patterns." },
+            { title: "Chapter 7: Transcendence (Elevation & Soaring Heights)", summary: "Investigates vertical spaces, high ceilings, and panoramic viewpoints that induce awe, quiet self-talk, and expand long-term perspective." },
+            { title: "Chapter 8: Magic (Illusion & Wonder)", summary: "Discusses how sparkle, reflection, bioluminescence, and atmospheric phenomena reignite a sense of mystery in ordinary life." },
+            { title: "Chapter 9: Celebration (Shared Delight)", summary: "Highlight how communal gatherings, confetti, music, and synchronized motion turn individual joy into contagious social connection." },
+            { title: "Chapter 10: Renewal (Flourishing & Growth)", summary: "Concludes with the restorative power of plants, blossoms, water features, and natural lifecycles that symbolize hope and continuous rebirth." }
+        ],
+        takeaways: [
+            "Joy is not just an internal state; it is deeply tied to sensory triggers in our physical surroundings.",
+            "Curves and rounded objects naturally reduce stress responses compared to sharp, angular forms.",
+            "Vibrant colors and natural light elevate daily energy levels and cognitive clarity.",
+            "Infusing surprise and play into living spaces restores curiosity and childlike delight."
+        ]
+    },
+
+    mindset: {
+        id: "mindset",
+        title: "Mindset",
+        subtitle: "The New Psychology of Success",
+        author: "Carol S. Dweck",
+        pillar: "Growth",
+        pillarIcon: "🌱",
+        color: "emerald",
+        tag: "Psychology & Potential",
+        overview: "Stanford psychologist Carol Dweck reveals how our beliefs about human capabilities shape every aspect of life. Comparing the 'Fixed Mindset' (believing abilities are static) with the 'Growth Mindset' (believing abilities can be developed through effort), Dweck provides a transformative guide for personal achievement, parenting, and leadership.",
+        chapters: [
+            { title: "Chapter 1: The Mindsets", summary: "Defines the fundamental contrast between Fixed Mindset (abilities are carved in stone) and Growth Mindset (skills are developed through dedication and deliberate practice)." },
+            { title: "Chapter 2: Inside the Mindsets", summary: "Explores how mindsets dictate emotional reactions to failure. Fixed mindsets view mistakes as definitive proof of inadequacy, whereas growth mindsets view errors as crucial learning feedback." },
+            { title: "Chapter 3: The Truth About Ability & Accomplishment", summary: "Debunks the myth of innate genius. Dweck shows that exceptional achievement is the result of sustained focus, strategy iteration, and resilience rather than raw talent." },
+            { title: "Chapter 4: Sports: The Mindset of a Champion", summary: "Examines athletic icons like Michael Jordan and Muhammad Ali, showing how unrelenting work ethic, coachability, and grit outweigh physical predisposition." },
+            { title: "Chapter 5: Business: Mindset and Leadership", summary: "Contrasts heroic fixed-mindset executives who demand praise with growth-mindset leaders (e.g., Satya Nadella, Lou Gerstner) who foster psychological safety, innovation, and learning cultures." },
+            { title: "Chapter 6: Relationships: Mindsets in Love", summary: "Applies mindset theory to romantic partnerships, demonstrating that healthy relationships require effort, communication, and growth rather than magical 'destiny.'" },
+            { title: "Chapter 7: Parents, Teachers, and Coaches", summary: "Provides guidelines for praising effort and strategy rather than innate intelligence or talent, preventing children from developing performance anxiety." },
+            { title: "Chapter 8: Changing Mindsets: A Workshop", summary: "Offers a step-by-step process for recognizing fixed-mindset triggers, naming one's inner critic, and adopting growth-oriented self-talk in daily life." }
+        ],
+        takeaways: [
+            "Embrace the word 'Yet'—shift from 'I can't do this' to 'I can't do this yet.'",
+            "Praise effort, strategy, and perseverance rather than raw intelligence or talent.",
+            "Failure is information for growth, not a judgment on personal character.",
+            "Cultivate a learning culture in leadership and relationships through open feedback."
+        ]
+    },
+
+    grit: {
+        id: "grit",
+        title: "Grit",
+        subtitle: "The Power of Passion and Perseverance",
+        author: "Angela Duckworth",
+        pillar: "Growth",
+        pillarIcon: "🔥",
+        color: "emerald",
+        tag: "Performance & Resilience",
+        overview: "Drawing on pioneering research at West Point, national spelling bees, and elite corporations, Angela Duckworth shows that secret to high achievement is not talent, but *Grit*—a unique combination of long-term passion and sustained perseverance.",
+        chapters: [
+            { title: "Chapter 1: Showing Up", summary: "Demonstrates that grit is a far more reliable predictor of success than IQ or innate talent across demanding military, academic, and professional environments." },
+            { title: "Chapter 2: Distracted by Talent", summary: "Examines society's bias toward natural talent, showing how fetishizing genius blinds us to the painstaking effort behind elite performance." },
+            { title: "Chapter 3: Effort Counts Twice", summary: "Introduces the formula: Talent × Effort = Skill, and Skill × Effort = Achievement. Effort enters the equation twice, proving its mathematical dominance over talent." },
+            { title: "Chapter 4: How Gritty Are You?", summary: "Presents the Grit Scale test, examining consistency of interest over time alongside perseverance through obstacles." },
+            { title: "Chapter 5: Grit Grows", summary: "Explores how grit naturally develops with age, experience, and deliberate cultivate throughout life." },
+            { title: "Chapter 6: Interest", summary: "Details how passion develops. Contrary to popular belief, passion is rarely discovered full-blown; it is cultivated through curiosity, exploration, and practice." },
+            { title: "Chapter 7: Practice", summary: "Explores Anders Ericsson's concept of Deliberate Practice: setting stretch goals, seeking immediate feedback, and focusing on weaknesses with intense concentration." },
+            { title: "Chapter 8: Purpose", summary: "Demonstrates that mature grit requires connecting personal goals to a purpose larger than oneself, serving as an emotional anchor during difficult times." },
+            { title: "Chapter 9: Hope", summary: "Defines gritty hope not as passive optimism, but as an active expectation that one's own efforts can improve future outcomes." },
+            { title: "Chapter 10: Growing Grit from the Outside In", summary: "Provides guidelines for parents, coaches, and mentors to foster grit in children by balancing high expectations with unconditional support." },
+            { title: "Chapter 11: Culture of Grit", summary: "Examines how joining teams or organizations with gritty cultures elevates individual perseverance through social norms and peer expectations." }
+        ],
+        takeaways: [
+            "Effort counts twice: Talent × Effort = Skill, and Skill × Effort = Achievement.",
+            "Passion is cultivated through curiosity and sustained investment, not sudden revelation.",
+            "Deliberate practice requires targeting weaknesses and seeking immediate feedback.",
+            "Connect daily effort to an overarching purpose that serves others."
+        ]
+    },
+
+    thegoodlife: {
+        id: "thegoodlife",
+        title: "The Good Life",
+        subtitle: "Lessons from the World's Longest Scientific Study of Happiness",
+        author: "Robert Waldinger & Marc Schulz",
+        pillar: "Connection",
+        pillarIcon: "🤝",
+        color: "blue",
+        tag: "Longevity & Social Ties",
+        overview: "Based on 84+ years of data from the Harvard Study of Adult Development, *The Good Life* delivers a clear, evidence-based verdict: strong, warm social relationships are the single greatest predictor of human health, happiness, and cognitive longevity.",
+        chapters: [
+            { title: "Chapter 1: What Makes a Good Life?", summary: "Introduces the Harvard Study of Adult Development following generations of men. The primary conclusion: Good relationships keep us happier and healthier. Period." },
+            { title: "Chapter 2: Social Fitness: Keeping Relationships Healthy", summary: "Introduces 'Social Fitness' as an active practice parallel to physical fitness. Relationships require continuous exercise, attention, and maintenance to prevent atrophy." },
+            { title: "Chapter 3: The Winding Road of Human Development", summary: "Traces how social needs shift across adulthood, emphasizing that it is never too late to form meaningful bonds or revitalize existing connections." },
+            { title: "Chapter 4: Relationsnip Depth & Vulnerability", summary: "Distinguishes between superficial contacts and deep connections. Vulnerability, active listening, and empathetic presence are essential for deep intimacy." },
+            { title: "Chapter 5: Facing Adversity Together", summary: "Shows how strong relationships act as biological stress buffers, calming overactive nervous systems during crisis and promoting physical recovery." },
+            { title: "Chapter 6: Relationships in the Workplace", summary: "Examines workplace happiness, showing that having trusted work colleagues increases job satisfaction, creativity, and career endurance." },
+            { title: "Chapter 7: Family Ties & Generational Wisdom", summary: "Explores the complex dynamics of family life, offering strategies for forgiving past friction and fostering intergenerational warmth." },
+            { title: "Chapter 8: It's Never Too Late to Flourish", summary: "Concludes with inspiring case studies of participants who discovered deep connection, joy, and purpose late in life, proving that change is always possible." }
+        ],
+        takeaways: [
+            "Strong relationships protect both bodily health and brain function as we age.",
+            "Loneliness is as biologically hazardous to health as smoking 15 cigarettes a day.",
+            "Practice 'Social Fitness'—actively check in with friends and invest in daily connection.",
+            "Quality of relationships matters far more than quantity of acquaintances."
+        ]
+    },
+
+    together: {
+        id: "together",
+        title: "Together",
+        subtitle: "The Healing Power of Human Connection in a Sometimes Lonely World",
+        author: "Vivek H. Murthy, M.D.",
+        pillar: "Connection",
+        pillarIcon: "❤️",
+        color: "blue",
+        tag: "Public Health & Loneliness",
+        overview: "U.S. Surgeon General Dr. Vivek Murthy addresses the modern epidemic of loneliness. *Together* outlines the biological necessity of human connection and offers a compassionate framework for rebuilding community in an increasingly isolated world.",
+        chapters: [
+            { title: "Chapter 1: The Invisible Epidemic", summary: "Defines loneliness as a public health crisis affecting millions, driving elevated risks for cardiovascular disease, depression, dementia, and premature death." },
+            { title: "Chapter 2: The Evolutionary Need for Connection", summary: "Traces loneliness to evolutionary origins where separation from the tribe triggered fight-or-flight survival responses that damaged tissue over time." },
+            { title: "Chapter 3: Three Circles of Connection", summary: "Outlines the 3 dimensions of connection: Intimate (partner/best friend), Relational (close friends), and Collective (community/group identity). All three are needed." },
+            { title: "Chapter 4: Solitude vs. Loneliness", summary: "Distinguishes harmful loneliness from restorative solitude. Grounding oneself in self-compassion and reflection is necessary before connecting deeply with others." },
+            { title: "Chapter 5: The Power of Community", summary: "Examines grassroots movements, neighborhood initiatives, and volunteer circles that foster social safety nets and collective resilience." },
+            { title: "Chapter 6: Technology & Connection", summary: "Critiques digital hyper-connectivity, showing how social media often amplifies social comparison while replacing rich, face-to-face eye contact." },
+            { title: "Chapter 7: Healing Through Service", summary: "Presents altruism and service as direct antidotes to loneliness. Helping others shifts focus outward, releasing oxytocin and building immediate trust." },
+            { title: "Chapter 8: Building a Connected Life", summary: "Concludes with actionable commitments: spend 15 minutes daily with loved ones, eliminate digital distractions during conversation, and practice daily service." }
+        ],
+        takeaways: [
+            "Loneliness is an evolutionary warning sign, like hunger or thirst, signaling a need for social nourishment.",
+            "Cultivate all 3 circles: intimate partners, close friends, and broader community groups.",
+            "Service and volunteering are immediate, powerful antidotes to feelings of isolation.",
+            "Practice uninterrupted presence: put devices away during face-to-face interactions."
+        ]
+    },
+
+    manssearch: {
+        id: "manssearch",
+        title: "Man's Search for Meaning",
+        subtitle: "An Introduction to Logotherapy",
+        author: "Viktor E. Frankl",
+        pillar: "Purpose",
+        pillarIcon: "🧭",
+        color: "purple",
+        tag: "Existential Philosophy",
+        overview: "Psychiatrist Viktor Frankl's timeless memoir details his survival in Nazi concentration camps. *Man's Search for Meaning* illustrates that while we cannot avoid suffering, we retain the absolute freedom to choose our attitude in any circumstance and find purpose in life.",
+        chapters: [
+            { title: "Part 1: Experiences in a Concentration Camp", summary: "Frankl chronicles the psychological stages of camp inmates—shock, apathy, and mental detachment. He observes that prisoners who maintained an inner vision or purpose were vastly more resilient to physical deprivation and despair." },
+            { title: "Part 2: Logotherapy in a Nutshell", summary: "Outlines Frankl's psychological framework. Man's primary drive is not pleasure (Freud) or power (Adler), but the 'Will to Meaning.' We discover meaning through work/creation, experiencing love/nature, and the courage we show in unavoidable suffering." },
+            { title: "Postscript: The Case for a Tragic Optimism", summary: "Argues for maintaining optimism despite the 'Tragic Triad' of human existence: pain, guilt, and death. By turning suffering into achievement and guilt into positive change, life remains meaningful to the final breath." }
+        ],
+        takeaways: [
+            "Everything can be taken from a man but one thing: the last of human freedoms—to choose one's attitude in any given set of circumstances.",
+            "He who has a *why* to live for can bear almost any *how*.",
+            "Meaning is discovered in 3 ways: creating work, experiencing love, and bearing suffering with dignity.",
+            "Focus on what life expects from you, rather than what you expect from life."
+        ]
+    },
+
+    powerofpurpose: {
+        id: "powerofpurpose",
+        title: "The Power of Purpose",
+        subtitle: "Create Meaning, Live Longer, Better",
+        author: "Richard J. Leider",
+        pillar: "Purpose",
+        pillarIcon: "🎯",
+        color: "purple",
+        tag: "Life Design & Aging",
+        overview: "Richard Leider provides a practical guide for uncovering core purpose across life transitions. Blending executive coaching with longevity insights, the book outlines how living with intention enhances health, career vitality, and graceful aging.",
+        chapters: [
+            { title: "Chapter 1: The Universal Quest", summary: "Establishes purpose not as a luxury, but as a fundamental biological requirement for mental and physical health." },
+            { title: "Chapter 2: Defining Purpose", summary: "Introduces the formula: Gifts + Passions + Values = Purpose. Uncovering purpose requires identifying signature talents and applying them to serve others." },
+            { title: "Chapter 3: The Purpose Mindset", summary: "Contrasts living by default (reacting to circumstance) with living by design (aligning daily choices with core personal values)." },
+            { title: "Chapter 4: Navigating Transitions", summary: "Offers frameworks for managing career shifts, mid-life re-evaluations, and retirement by unlocking new sources of personal contribution." },
+            { title: "Chapter 5: Who Do You Want to Be When You Grow Old?", summary: "Examines aging as a process of ripening and elderhood. Focuses on wisdom-sharing, intergenerational mentoring, and intentional legacy building." },
+            { title: "Chapter 6: Daily Purpose Practices", summary: "Presents practical tools like the 'Default Calendar Review' and 'Purpose Check-In' to keep daily actions aligned with overarching life goals." }
+        ],
+        takeaways: [
+            "Purpose Formula: Gifts + Passions + Values = Purpose.",
+            "Aging is an opportunity for 'elderhood'—sharing wisdom and mentoring younger generations.",
+            "Reframe retirement from 'stepping down' to 'stepping up' into community contribution.",
+            "Audit your calendar weekly to ensure daily time allocation reflects core values."
+        ]
+    },
+
+    ikigai: {
+        id: "ikigai",
+        title: "Ikigai",
+        subtitle: "The Japanese Secret to a Long and Happy Life",
+        author: "Héctor García & Francesc Miralles",
+        pillar: "Purpose",
+        pillarIcon: "🌸",
+        color: "purple",
+        tag: "Okinawan Longevity",
+        overview: "Exploring Ogimi, an Okinawan village with the world's highest concentration of centenarians, *Ikigai* reveals how finding your 'reason for being' paired with healthy dietary habits, light movement, and community bonds creates a long, joyful life.",
+        chapters: [
+            { title: "Chapter 1: Ikigai: The Art of Staying Young", summary: "Introduces Okinawa as a Blue Zone and defines Ikigai as the intersection of What you love, What you are good at, What the world needs, and What you get paid for." },
+            { title: "Chapter 2: Antiaging Secrets", summary: "Examines cellular stress, demonstrating how chronic stress accelerates aging while mindful living and emotional calm preserve telomeres." },
+            { title: "Chapter 3: Meaning Over Cure", summary: "Connects Morita therapy and Logotherapy with Japanese daily practices, emphasizing acceptance of feelings and commitment to purposeful action." },
+            { title: "Chapter 4: Find Flow in Everything", summary: "Explores Mihaly Csikszentmihalyi's flow state, showing how immersion in daily tasks transforms routine chores into meditative satisfaction." },
+            { title: "Chapter 5: Master Wisdom from Centenarians", summary: "Shares direct interviews with Okinawan elders emphasizing unhurried living, daily gardening, continuous activity, and optimistic warmth." },
+            { title: "Chapter 6: Lessons from Ogimi", summary: "Details Moais—social support circles that guarantee lifelong friendship and financial safety nets for village residents." },
+            { title: "Chapter 7: The Ikigai Diet", summary: "Covers Okinawan nutrition: 7+ plant servings daily, rich antioxidant teas, and Hara Hachi Bu (eating until 80% full)." },
+            { title: "Chapter 8: Gentle Movement", summary: "Highlights low-impact daily movement—Radio Taiso, walking, gardening, and Yoga—over strenuous workouts." },
+            { title: "Chapter 9: Resilience & Wabi-Sabi", summary: "Explores resilience and Wabi-Sabi (appreciating impermanence), teaching how to bend without breaking in life's storms." }
+        ],
+        takeaways: [
+            "Discover your Ikigai at the intersection of Passion, Mission, Vocation, and Profession.",
+            "Practice Hara Hachi Bu: stop eating when you are 80% full.",
+            "Build a 'Moai'—a close network of friends committed to supporting one another for life.",
+            "Keep moving gently every day; never truly 'retire' from meaningful activity."
+        ]
+    },
+
+    giveandtake: {
+        id: "giveandtake",
+        title: "Give and Take",
+        subtitle: "A Revolutionary Approach to Success",
+        author: "Adam Grant",
+        pillar: "Contribution",
+        pillarIcon: "🤲",
+        color: "rose",
+        tag: "Organizational Psychology",
+        overview: "Wharton professor Adam Grant examines reciprocity styles in professional life: Givers, Takers, and Matchers. *Give and Take* proves that while selfish Takers may rise quickly, selfless strategic Givers achieve the highest, most sustainable success in modern networks.",
+        chapters: [
+            { title: "Chapter 1: Good Returns", summary: "Defines the 3 reciprocity styles: Takers (extract maximum value), Matchers (equal trade), and Givers (contribute without expecting immediate return)." },
+            { title: "Chapter 2: The Peacock and the Panda", summary: "Examines how Takers burn bridges over time, whereas Givers build deep, enduring networks grounded in genuine trust and goodwill." },
+            { title: "Chapter 3: The Ripple Effect", summary: "Shows how Givers collaborate effectively, elevating team intelligence and psychological safety while sharing credit generously." },
+            { title: "Chapter 4: Finding the Diamond in the Rough", summary: "Illustrates how Giver leaders spot latent talent in others, fostering growth and mentorship that Takers overlook." },
+            { title: "Chapter 5: The Power of Powerless Communication", summary: "Demonstrates that tentative speech, vulnerability, and active listening build rapport and influence more effectively than dominant swagger." },
+            { title: "Chapter 6: Avoiding the Doormat Effect", summary: "Distinguishes Selfless Givers (who burn out) from Otherish Givers (who maintain healthy boundaries and strategic impact)." },
+            { title: "Chapter 7: Chump Change", summary: "Provides strategies for Givers to avoid being exploited by Takers by shifting to strategic Matcher tactics when necessary." },
+            { title: "Chapter 8: The Reciprocity Ring", summary: "Presents group exercises where individuals ask for help and practice peer giving, cultivating generous corporate cultures." }
+        ],
+        takeaways: [
+            "Be an 'Otherish Giver'—give generously while protecting your energy and boundaries.",
+            "Givers win in the long run because their networks build deep trust and widespread goodwill.",
+            "Practice 5-minute favors: quick, low-cost ways to add high value to someone else's day.",
+            "Use 'Powerless Communication'—listen actively and express vulnerability to build influence."
+        ]
+    },
+
+    fromstrength: {
+        id: "fromstrength",
+        title: "From Strength to Strength",
+        subtitle: "Finding Success, Happiness, and Deep Purpose in the Second Half of Life",
+        author: "Arthur C. Brooks",
+        pillar: "Contribution",
+        pillarIcon: "🏛️",
+        color: "rose",
+        tag: "Midlife Transition",
+        overview: "Harvard professor Arthur C. Brooks addresses the decline of fluid intelligence in mid-career. By transitioning from 'Fluid Intelligence' (raw problem solving) to 'Crystallized Intelligence' (wisdom, teaching, synthesis), individuals can thrive and find profound meaning in life's second half.",
+        chapters: [
+            { title: "Chapter 1: The Striver's Curse", summary: "Examines the natural decline of high-level professional performance in mid-career, illustrating how holding tightly to youth triggers anxiety." },
+            { title: "Chapter 2: Two Curves of Intelligence", summary: "Introduces Raymond Cattell's research: Fluid Intelligence peaks in 30s; Crystallized Intelligence (synthesizing wisdom) increases through 60s and 70s." },
+            { title: "Chapter 3: Jump to the Second Curve", summary: "Outlines how to shift careers from individual execution to teaching, mentoring, advising, and synthesising knowledge." },
+            { title: "Chapter 4: Detach from Success", summary: "Warns against addiction to professional prestige and workaholism, urging readers to detach self-worth from title and income." },
+            { title: "Chapter 5: Ponder Your Death", summary: "Uses Eastern philosophy and *memento mori* to illuminate what truly matters, dismantling superficial ego goals." },
+            { title: "Chapter 6: Cultivate Your Aspen Grove", summary: "Emphasizes investing deeply in warm personal relationships, family ties, and social contribution over professional accolades." },
+            { title: "Chapter 7: Start Your Forest", summary: "Provides practical steps for building a life second half centered on spiritual growth, mentoring, and serene service." }
+        ],
+        takeaways: [
+            "Transition from Fluid Intelligence (executing) to Crystallized Intelligence (teaching & wisdom).",
+            "Detach your identity from professional titles and past accomplishments.",
+            "Shift from 'taking' and accumulating to 'giving' and mentoring.",
+            "Invest heavily in deep relationships—the ultimate safety net for life's second half."
+        ]
+    },
+
+    outlive: {
+        id: "outlive",
+        title: "Outlive",
+        subtitle: "The Science and Art of Longevity",
+        author: "Peter Attia, M.D.",
+        pillar: "Physical Fitness",
+        pillarIcon: "🏃",
+        color: "teal",
+        tag: "Medicine 3.0 & Healthspan",
+        overview: "Dr. Peter Attia presents a groundbreaking manifesto on longevity. Shifting from reactive medicine (Medicine 2.0) to proactive preventative care (Medicine 3.0), *Outlive* provides scientific strategies across exercise, nutrition, sleep, and emotional health to extend both lifespan and healthspan.",
+        chapters: [
+            { title: "Chapter 1: The Long Game", summary: "Contrasts Medicine 2.0 (treating disease after symptoms appear) with Medicine 3.0 (preventing chronic disease decades before onset)." },
+            { title: "Chapter 2: The Four Horsemen", summary: "Identifies the major chronic killers: Heart Disease, Cancer, Neurodegenerative Disease, and Type 2 Diabetes/Metabolic Dysfunction." },
+            { title: "Chapter 3: Metabolic Health", summary: "Explores insulin resistance as the foundational driver of metabolic breakdown, urging early monitoring of ApoB, HbA1c, and visceral fat." },
+            { title: "Chapter 4: Exercise: The Longevity Drug", summary: "Establishes exercise as the most potent longevity intervention, far outperforming any pharmaceutical drug in risk reduction." },
+            { title: "Chapter 5: Cardiorespiratory Fitness", summary: "Details VO2 Max as the strongest single predictor of longevity, alongside Zone 2 aerobic training for mitochondrial health." },
+            { title: "Chapter 6: Strength & Muscle Mass", summary: "Focuses on preserving grip strength, leg power, and lean muscle mass to prevent frailty and falls in older age." },
+            { title: "Chapter 7: Nutrition Rethought", summary: "Moves past dogmatic diets to focus on adequate protein intake (1.6-2.2g/kg), caloric balance, and metabolic control." },
+            { title: "Chapter 8: Sleep as Medicine", summary: "Analyzes sleep architecture, showing how 7-9 hours of quality sleep repairs vascular tissue, clears brain toxins, and stabilizes glucose." },
+            { title: "Chapter 9: Emotional Health", summary: "Concludes that physical longevity is meaningless without emotional health, addressing trauma, distress tolerance, and self-compassion." }
+        ],
+        takeaways: [
+            "Focus on Healthspan (quality of life) alongside Lifespan (quantity of years).",
+            "Build high cardiorespiratory fitness (VO2 Max) and Zone 2 aerobic endurance.",
+            "Prioritize resistance training to preserve muscle mass, grip strength, and bone density.",
+            "Consume sufficient daily protein (1.6g+ per kg of body weight) to prevent muscle loss."
+        ]
+    },
+
+    bluezones: {
+        id: "bluezones",
+        title: "The Blue Zones",
+        subtitle: "Lessons for Living Longer From the People Who've Lived the Longest",
+        author: "Dan Buettner",
+        pillar: "Physical Fitness",
+        pillarIcon: "🌐",
+        color: "teal",
+        tag: "Lifestyle & Demographics",
+        overview: "National Geographic fellow Dan Buettner identifies 5 global 'Blue Zones' (Okinawa, Sardinia, Nicoya, Icaria, Loma Linda) where people live measurably longer, healthier lives. He distills their shared lifestyle practices into the 'Power 9' framework.",
+        chapters: [
+            { title: "Chapter 1: Sardinia, Italy", summary: "Examines steep mountain living, plant-rich diets, red wine in moderation, and strong family reverence that yields high male centenarians." },
+            { title: "Chapter 2: Okinawa, Japan", summary: "Focuses on purpose (Ikigai), plant-slant diet, daily gardening, social Moais, and eating until 80% full (Hara Hachi Bu)." },
+            { title: "Chapter 3: Loma Linda, California", summary: "Studies Seventh-day Adventists who outlive average Americans by 10 years through a vegetarian diet, Sabbath rest, and faith community." },
+            { title: "Chapter 4: Nicoya Peninsula, Costa Rica", summary: "Highlights strong 'plan de vida' (life plan), mineral-rich water, low-calorie diets, and deep family integration." },
+            { title: "Chapter 5: Icaria, Greece", summary: "Explores the Aegean island where people 'forget to die' due to Mediterranean diets, herbal teas, afternoon naps, and unhurried pace." },
+            { title: "Chapter 6: The Power 9", summary: "Synthesizes 9 core longevity habits: Move naturally, Purpose, Downshift, 80% Rule, Plant Slant, Wine at 5, Belong, Loved Ones First, Right Tribe." }
+        ],
+        takeaways: [
+            "Incorporate natural movement throughout the day rather than relying solely on gyms.",
+            "Eat a 'Plant Slant' diet focused on beans, whole grains, greens, and nuts.",
+            "Downshift daily to shed stress through prayer, naps, or social hours.",
+            "Surround yourself with a social circle that reinforces healthy behaviors."
+        ]
+    },
+
+    upsideofstress: {
+        id: "upsideofstress",
+        title: "The Upside of Stress",
+        subtitle: "Why Stress Is Good for You, and How to Get Good at It",
+        author: "Kelly McGonigal, Ph.D.",
+        pillar: "Mental Wellbeing",
+        pillarIcon: "🧘",
+        color: "indigo",
+        tag: "Stress & Mindset",
+        overview: "Stanford health psychologist Kelly McGonigal presents groundbreaking research showing that stress is not inherently harmful. Believing stress is helpful creates courage, releases protective hormones like oxytocin, and enhances cognitive resilience.",
+        chapters: [
+            { title: "Chapter 1: Rethinking Stress", summary: "Demonstrates that believing stress is harmful increases mortality risk, whereas viewing stress as a energizing resource protects cardiovascular health." },
+            { title: "Chapter 2: The Biology of Stress", summary: "Explores the stress response: adrenaline sharpens focus, cortisol mobilizes energy, and oxytocin urges us to seek social support." },
+            { title: "Chapter 3: Mindset Shifts", summary: "Shows how adopting a 'Stress-is-Enhancing' mindset transforms fear into performance, improving immune function and cognitive efficiency." },
+            { title: "Chapter 4: Connect: The Tend-and-Befriend Response", summary: "Details how stress releases oxytocin, motivating us to protect others and seek community, which protects the heart from stress damage." },
+            { title: "Chapter 5: Growth: Stress Transforms You", summary: "Examines how overcoming difficulty builds psychological muscles, fostering post-traumatic growth and stress mastery." },
+            { title: "Chapter 6: Meaning is Healthy", summary: "Concludes that a meaningful life is not a stress-free life; pursuing challenging, meaningful goals yields higher deep satisfaction." }
+        ],
+        takeaways: [
+            "Reframe physical stress symptoms (racing heart, fast breathing) as your body preparing to meet a challenge.",
+            "Oxytocin released during stress motivates you to reach out for social support.",
+            "A meaningful life is naturally stressful; focus on managing energy rather than eliminating stress.",
+            "View past adversity as evidence of your capacity for resilience and growth."
+        ]
+    },
+
+    resilient: {
+        id: "resilient",
+        title: "Resilient",
+        subtitle: "How to Grow an Unshakable Core of Calm, Strength, and Happiness",
+        author: "Rick Hanson, Ph.D.",
+        pillar: "Mental Wellbeing",
+        pillarIcon: "🛡️",
+        color: "indigo",
+        tag: "Neuroplasticity & Mindfulness",
+        overview: "Neuropsychologist Rick Hanson shows how to use positive neuroplasticity to overcome the brain's evolutionary negativity bias. Using his 'HEAL' framework, *Resilient* teaches readers to turn fleeting positive experiences into lasting neural structure.",
+        chapters: [
+            { title: "Chapter 1: Compassion", summary: "Establishes self-compassion as the foundation of inner strength, quietening inner self-criticism and fostering emotional safety." },
+            { title: "Chapter 2: Mindfulness", summary: "Teaches open awareness of thoughts and feelings without judgment, creating space between stimulus and response." },
+            { title: "Chapter 3: Learning (The HEAL Process)", summary: "Outlines the HEAL model: Have a positive experience, Enrich it, Absorb it, and Link it to soothe negative patterns." },
+            { title: "Chapter 4: Grit & Agency", summary: "Focuses on developing executive agency, persistence, and internal locus of control during difficult life events." },
+            { title: "Chapter 5: Gratitude & Joy", summary: "Explores active savoring of positive moments to rewire brain pathways away from habitual threat scanning." },
+            { title: "Chapter 6: Calm & Emotional Balance", summary: "Provides polyvagal techniques for regulating the parasympathetic nervous system, cooling anger and anxiety." },
+            { title: "Chapter 7: Motivation & Intention", summary: "Aligns daily choices with core values, maintaining intrinsic drive without falling into compulsive striving." },
+            { title: "Chapter 8: Intimacy & Generosity", summary: "Concludes with practices for expanding forgiveness, setting boundaries, and cultivating an open, warm heart." }
+        ],
+        takeaways: [
+            "The brain is like velcro for negative experiences and teflon for positive ones; actively savor positive moments for 12+ seconds.",
+            "Use the HEAL method: Have, Enrich, Absorb, and Link positive mental states.",
+            "Practice self-compassion to calm the threat-detection system in the amygdala.",
+            "Regularly cultivate inner calm through slow, prolonged exhalations."
+        ]
+    },
+
+    ultraprocessed: {
+        id: "ultraprocessed",
+        title: "Ultra-Processed People",
+        subtitle: "The Science Behind Food That Isn't Food",
+        author: "Chris van Tulleken, M.D.",
+        pillar: "Healthy Eating",
+        pillarIcon: "🥗",
+        color: "lime",
+        tag: "Nutrition & Food Industry",
+        overview: "Infectious disease physician Chris van Tulleken exposes the global rise of Ultra-Processed Food (UPF). Blending scientific trial data with personal self-experimentation, the book reveals how industrial food formulations hijack brain chemistry, disrupt gut microbiome balance, and drive modern chronic metabolic disease.",
+        chapters: [
+            { title: "Chapter 1: What is Food?", summary: "Defines Ultra-Processed Food (UPF) not merely as altered food, but as industrially engineered formulations designed to maximize profit and hyper-palatability." },
+            { title: "Chapter 2: The Self-Experiment", summary: "Dr. van Tulleken adopts an 80% UPF diet for 30 days, experiencing rapid weight gain, brain rewiring on fMRI scans, digestive distress, and hormonal disruption." },
+            { title: "Chapter 3: Softness and Speed", summary: "Shows how UPFs are hyper-soft, eliminating mastication effort and allowing calories to flood the system faster than satiety signals can register." },
+            { title: "Chapter 4: Flavor Engineering", summary: "Examines synthetic additives, emulsifiers, and artificial flavorings that trick the brain's sensory systems, breaking natural appetite control." },
+            { title: "Chapter 5: Gut Destruction", summary: "Examines emulsifiers (e.g., polysorbate 80, carboxymethylcellulose) that erode the protective gut mucosal layer, driving systemic inflammation." },
+            { title: "Chapter 6: Corporate Capture", summary: "Uncovers how food conglomerates lobby governments and fund biased nutritional studies to protect ultra-processed profit margins." },
+            { title: "Chapter 7: Escaping the UPF Trap", summary: "Offers practical strategies for identifying UPF (if it contains ingredients not found in a home kitchen, it's UPF) and reclaiming real food." }
+        ],
+        takeaways: [
+            "Rule of thumb: If an item has ingredients you wouldn't find in a normal home kitchen, it is Ultra-Processed Food.",
+            "UPFs are engineered for hyper-palatability, bypassing natural brain satiety signals.",
+            "Emulsifiers and additives erode gut mucosal health, causing low-grade systemic inflammation.",
+            "Shift focus from tracking macronutrients to prioritizing real, minimally processed whole foods."
+        ]
+    },
+
+    nova: {
+        id: "nova",
+        title: "The NOVA Food Classification System",
+        subtitle: "Understanding Food Processing & Public Health",
+        author: "Carlos Monteiro",
+        pillar: "Healthy Eating",
+        pillarIcon: "🌱",
+        color: "lime",
+        tag: "Nutritional Science",
+        overview: "Developed by Professor Carlos Monteiro at the University of São Paulo, NOVA is the world's leading academic framework categorizing food by the extent and purpose of industrial processing rather than nutrient content. It underpins modern public health guidelines globally.",
+        chapters: [
+            { title: "Group 1: Unprocessed or Minimally Processed Foods", summary: "Natural edible parts of plants, animals, or fungi (fresh fruits, vegetables, grains, legumes, meat, eggs, milk) subjected to drying, crushing, or freezing without added substances." },
+            { title: "Group 2: Processed Culinary Ingredients", summary: "Substances extracted directly from Group 1 foods or nature (oils, butter, sugar, salt, vinegar) used in kitchens to season and cook real dishes." },
+            { title: "Group 3: Processed Foods", summary: "Relatively simple products made by adding Group 2 ingredients to Group 1 foods (canned vegetables, artisanal cheese, freshly baked bread, cured meats) to extend shelf life." },
+            { title: "Group 4: Ultra-Processed Foods (UPF)", summary: "Industrial formulations made mostly or entirely of substances derived from foods (hydrogenated oils, modified starches, protein isolates) plus additives (emulsifiers, colorings, artificial flavors). Designed to be hyper-palatable, cheap, and convenient." }
+        ],
+        takeaways: [
+            "Focus on the degree of processing rather than isolated calories, fats, or carbohydrates.",
+            "Group 1 (Whole Foods) should form 80%+ of daily dietary intake.",
+            "Group 4 (UPFs) displace healthy foods and are strongly linked to metabolic syndrome, obesity, and cancer.",
+            "Cook at home using Group 1 foods combined with basic Group 2 ingredients."
+        ]
+    },
+
+    indefense: {
+        id: "indefense",
+        title: "In Defense of Food",
+        subtitle: "An Eater's Manifesto",
+        author: "Michael Pollan",
+        pillar: "Healthy Eating",
+        pillarIcon: "🍏",
+        color: "lime",
+        tag: "Food Culture & Wisdom",
+        overview: "Journalist Michael Pollan critiques the modern Western reductionist 'nutritionism' obsession. He summarizes his clear, common-sense philosophy in seven simple words: *Eat food. Not too much. Mostly plants.*",
+        chapters: [
+            { title: "Part 1: The Age of Nutritionism", summary: "Critiques the reductionist view that food is merely a delivery vehicle for isolated nutrients (vitamins, fats, carbs), which has allowed industrial food marketers to formulate junk food with health claims." },
+            { title: "Part 2: The Western Diet and the Diseases of Civilization", summary: "Traces the rise of chronic metabolic disease to the industrial transition toward refined grains, added sugars, chemical additives, and agricultural monocultures." },
+            { title: "Part 3: Getting Over Nutritionism", summary: "Advocates returning to traditional food cultures, intuitive eating, and holistic dietary wisdom that sustained human health for millennia prior to industrialization." },
+            { title: "Rules for Eating", summary: "Outlines practical guidelines: Don't eat anything your great-grandmother wouldn't recognize as food; Shop the peripheries of the supermarket; Eat at a table with family." }
+        ],
+        takeaways: [
+            "Eat food. Not too much. Mostly plants.",
+            "Avoid food products that make health claims on the package—real food doesn't need a marketing campaign.",
+            "Shop the outer perimeter of the grocery store where fresh, whole foods are stocked.",
+            "Pay more for higher quality food and eat less of it; treat meals as a slow, enjoyable social ritual."
+        ]
+    }
+};
+
+let currentBookId = 'flourish';
+let currentSearchTerm = '';
+
+function renderSidebar() {
+    const navContainer = document.getElementById('bookListNav');
+    navContainer.innerHTML = '';
+
+    const pillars = [
+        { name: "Joy", color: "text-amber-600 dark:text-amber-400" },
+        { name: "Growth", color: "text-emerald-600 dark:text-emerald-400" },
+        { name: "Connection", color: "text-blue-600 dark:text-blue-400" },
+        { name: "Purpose", color: "text-purple-600 dark:text-purple-400" },
+        { name: "Contribution", color: "text-rose-600 dark:text-rose-400" },
+        { name: "Physical Fitness", color: "text-teal-600 dark:text-teal-400" },
+        { name: "Mental Wellbeing", color: "text-indigo-600 dark:text-indigo-400" },
+        { name: "Healthy Eating", color: "text-lime-600 dark:text-lime-400" }
+    ];
+
+    let matchCount = 0;
+
+    pillars.forEach(p => {
+        const booksInPillar = Object.values(BOOKS).filter(b => {
+            const matchesPillar = b.pillar === p.name;
+            const matchesSearch = currentSearchTerm === '' || 
+                b.title.toLowerCase().includes(currentSearchTerm) || 
+                b.author.toLowerCase().includes(currentSearchTerm) ||
+                b.tag.toLowerCase().includes(currentSearchTerm);
+            return matchesPillar && matchesSearch;
+        });
+
+        if (booksInPillar.length > 0) {
+            matchCount += booksInPillar.length;
+
+            const pillarHeader = document.createElement('div');
+            pillarHeader.className = "pt-2 first:pt-0";
+            pillarHeader.innerHTML = `<h3 class="text-xs font-bold ${p.color} uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                <span>${booksInPillar[0].pillarIcon}</span> ${p.name}
+            </h3>`;
+            navContainer.appendChild(pillarHeader);
+
+            booksInPillar.forEach(book => {
+                const btn = document.createElement('button');
+                const isSelected = book.id === currentBookId;
+                btn.onclick = () => selectBook(book.id);
+                btn.className = `w-full text-left p-2.5 rounded-xl transition-all duration-150 flex items-center justify-between ${
+                    isSelected 
+                    ? 'bg-brand-red text-white font-medium shadow-sm' 
+                    : 'hover:bg-brand-sand/60 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-300'
+                }`;
+                btn.innerHTML = `
+                    <div class="truncate pr-2">
+                        <div class="text-xs font-bold truncate">${book.title}</div>
+                        <div class="text-[11px] opacity-80 truncate">${book.author}</div>
+                    </div>
+                    ${isSelected ? '<span class="text-xs">➔</span>' : ''}
+                `;
+                navContainer.appendChild(btn);
+            });
+        }
+    });
+
+    document.getElementById('bookCountBadge').textContent = `${matchCount} Books`;
+}
+
+function selectBook(bookId) {
+    if (!BOOKS[bookId]) return;
+    currentBookId = bookId;
+    renderSidebar();
+    renderBookDetail();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderBookDetail() {
+    const book = BOOKS[currentBookId];
+    const container = document.getElementById('bookDetailView');
+
+    container.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-6 border-b border-stone-200 dark:border-stone-800">
+            <div>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-brand-sand dark:bg-stone-800 text-brand-red dark:text-red-400 mb-3">
+                    <span>${book.pillarIcon}</span> ${book.pillar} • ${book.tag}
+                </span>
+                <h1 class="text-3xl sm:text-4xl font-title font-bold text-brand-dark dark:text-stone-100 tracking-tight">
+                    ${book.title}
+                </h1>
+                <p class="text-base sm:text-lg text-stone-500 dark:text-stone-400 font-serif italic mt-1">
+                    ${book.subtitle}
+                </p>
+                <p class="text-sm font-semibold text-brand-red dark:text-red-400 mt-2">By ${book.author}</p>
+            </div>
+            
+            <button onclick="downloadStandaloneHTML('${book.id}')" 
+                    class="flex items-center gap-2 px-4 py-2.5 bg-brand-dark dark:bg-stone-100 text-white dark:text-stone-900 rounded-xl text-xs font-bold hover:bg-stone-800 dark:hover:bg-white transition-colors shadow-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                Export Standalone HTML
+            </button>
+        </div>
+
+        <!-- Overview Section -->
+        <div class="mb-10">
+            <h2 class="text-xl font-title font-bold text-brand-dark dark:text-stone-100 mb-3 flex items-center gap-2">
+                <span class="w-2 h-6 bg-brand-red rounded-full"></span> Core Overview
+            </h2>
+            <div class="p-5 rounded-2xl bg-brand-cream/80 dark:bg-stone-800/50 border border-brand-sand dark:border-stone-800 text-stone-700 dark:text-stone-300 text-sm leading-relaxed font-serif">
+                ${book.overview}
+            </div>
+        </div>
+
+        <!-- Chapter Summaries Section -->
+        <div class="mb-10">
+            <h2 class="text-xl font-title font-bold text-brand-dark dark:text-stone-100 mb-6 flex items-center gap-2">
+                <span class="w-2 h-6 bg-brand-red rounded-full"></span> Chapter Breakdown
+            </h2>
+            <div class="space-y-4">
+                ${book.chapters.map((ch, i) => `
+                    <div class="p-5 rounded-xl border border-stone-200 dark:border-stone-800 hover:border-brand-sand dark:hover:border-stone-700 transition-colors bg-white dark:bg-stone-900">
+                        <h3 class="text-sm font-bold text-brand-dark dark:text-stone-200 mb-2 font-serif flex items-center gap-2">
+                            <span class="text-xs text-brand-red dark:text-red-400 font-sans">0${i+1}.</span> ${ch.title}
+                        </h3>
+                        <p class="text-xs sm:text-sm text-stone-600 dark:text-stone-400 leading-relaxed">${ch.summary}</p>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+
+        <!-- Key Takeaways Section -->
+        <div>
+            <h2 class="text-xl font-title font-bold text-brand-dark dark:text-stone-100 mb-4 flex items-center gap-2">
+                <span class="w-2 h-6 bg-brand-red rounded-full"></span> Key Actionable Principles
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                ${book.takeaways.map(t => `
+                    <div class="p-4 rounded-xl bg-brand-sand/40 dark:bg-stone-800/80 border border-brand-sand dark:border-stone-700 flex items-start gap-3">
+                        <span class="text-brand-red font-bold text-sm">✓</span>
+                        <p class="text-xs text-stone-700 dark:text-stone-300 font-medium leading-relaxed">${t}</p>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+}
+
+function downloadStandaloneHTML(bookId) {
+    const book = BOOKS[bookId];
+    if (!book) return;
+
+    const chapterItems = book.chapters.map((ch, i) => 
+        '<div class="p-5 rounded-xl border border-stone-200 bg-white">' +
+            '<h3 class="text-base font-bold text-stone-900 font-serif mb-2">0' + (i + 1) + '. ' + ch.title + '</h3>' +
+            '<p class="text-sm text-stone-600 leading-relaxed">' + ch.summary + '</p>' +
+        '</div>'
+    ).join('');
+
+    const takeawayItems = book.takeaways.map(t => 
+        '<div class="p-4 rounded-xl bg-stone-50 border border-stone-200 flex items-start gap-3">' +
+            '<span class="text-red-600 font-bold">✓</span>' +
+            '<p class="text-xs text-stone-700 font-medium">' + t + '</p>' +
+        '</div>'
+    ).join('');
+
+    const htmlContent = '<!DOCTYPE html>\n' +
+'<html lang="en">\n' +
+'<head>\n' +
+'    <meta charset="UTF-8">\n' +
+'    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
+'    <title>' + book.title + ' - Book Summary</title>\n' +
+'    <script src="https://cdn.tailwindcss.com"><\/script>\n' +
+'    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">\n' +
+'    <style>\n' +
+'        body { font-family: "Inter", sans-serif; background-color: #FAF7F2; color: #332F2C; }\n' +
+'        .font-serif { font-family: "Lora", serif; }\n' +
+'        .font-title { font-family: "Cinzel", serif; }\n' +
+'    </style>\n' +
+'</head>\n' +
+'<body class="py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">\n' +
+'    <div class="bg-white p-8 sm:p-12 rounded-2xl border border-stone-200 shadow-sm">\n' +
+'        <div class="mb-8 pb-6 border-b border-stone-200">\n' +
+'            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-stone-100 text-red-600 mb-3">\n' +
+'                ' + book.pillarIcon + ' ' + book.pillar + ' • ' + book.tag + '\n' +
+'            </span>\n' +
+'            <h1 class="text-4xl font-title font-bold text-stone-900 mb-2">' + book.title + '</h1>\n' +
+'            <p class="text-lg font-serif italic text-stone-600 mb-3">' + book.subtitle + '</p>\n' +
+'            <p class="text-sm font-bold text-red-600">By ' + book.author + '</p>\n' +
+'        </div>\n' +
+'        <div class="mb-10">\n' +
+'            <h2 class="text-xl font-title font-bold text-stone-900 mb-3">Core Overview</h2>\n' +
+'            <div class="p-6 rounded-xl bg-stone-50 border border-stone-200 text-stone-700 font-serif leading-relaxed">\n' +
+'                ' + book.overview + '\n' +
+'            </div>\n' +
+'        </div>\n' +
+'        <div class="mb-10">\n' +
+'            <h2 class="text-xl font-title font-bold text-stone-900 mb-4">Chapter Breakdown</h2>\n' +
+'            <div class="space-y-4">' + chapterItems + '</div>\n' +
+'        </div>\n' +
+'        <div>\n' +
+'            <h2 class="text-xl font-title font-bold text-stone-900 mb-4">Key Takeaways</h2>\n' +
+'            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">' + takeawayItems + '</div>\n' +
+'        </div>\n' +
+'    </div>\n' +
+'</body>\n' +
+'</html>';
+
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${book.title.toLowerCase().replace(/[^a-z0-9]/g, '_')}_summary.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function filterBooks() {
+    currentSearchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+    renderSidebar();
+}
+
+function toggleDarkMode() {
+    document.documentElement.classList.toggle('dark');
+    const isDark = document.documentElement.classList.contains('dark');
+    document.getElementById('sunIcon').classList.toggle('hidden', !isDark);
+    document.getElementById('moonIcon').classList.toggle('hidden', isDark);
+}
+
+window.onload = function() {
+    renderSidebar();
+    renderBookDetail();
+};
+</script>
+</body>
+</html>

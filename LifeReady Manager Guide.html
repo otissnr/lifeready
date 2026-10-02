@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LifeReady Manager Guide: Using ADKAR with your team</title>
+<style>
+:root{--bg:#f7fafb;--card:#fff;--ink:#17324d;--muted:#5d7083;--line:#dce7eb;--teal:#0d7f78;--tint:#e4f5f3;--warn:#fff6dd;--warnline:#e6d08a;
+--a:#5ba7dc;--d:#ef806e;--k:#8f72c6;--b:#0d9b92;--r:#e0a12b;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1c28;--card:#172a3a;--ink:#e8f0f5;--muted:#9db0bf;--line:#2a4054;--teal:#4fd1c5;--tint:#173a3d;--warn:#3a3218;--warnline:#6b5c25}}
+:root[data-theme="dark"]{--bg:#0f1c28;--card:#172a3a;--ink:#e8f0f5;--muted:#9db0bf;--line:#2a4054;--teal:#4fd1c5;--tint:#173a3d;--warn:#3a3218;--warnline:#6b5c25}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+main{max-width:720px;margin:auto;padding:28px 18px 64px}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.2;letter-spacing:-.01em}
+h1{font-size:clamp(32px,7vw,46px);margin:0 0 12px}
+h2{font-size:27px;margin:44px 0 10px}
+h3{font-size:19px;margin:18px 0 6px}
+p{margin:0 0 12px}
+.lead{font-size:19px;color:var(--muted)}
+.note{background:var(--tint);border-radius:12px;padding:14px 16px;margin:18px 0}
+.warn{background:var(--warn);border:1px solid var(--warnline);border-radius:12px;padding:14px 16px;margin:18px 0}
+.stage{border-left:6px solid var(--c);padding:2px 0 2px 18px;margin:30px 0}
+.stage h2{margin-top:0}
+.goal{color:var(--muted);font-style:italic;margin-bottom:12px}
+.lbl{font-weight:700;margin:14px 0 4px}
+ul{margin:0 0 12px;padding-left:22px}li{margin:4px 0}
+.say{border-left:3px solid var(--line);padding:2px 0 2px 12px;margin:8px 0;color:var(--ink)}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:15px}
+th,td{text-align:left;vertical-align:top;padding:10px;border-bottom:1px solid var(--line)}
+th{background:var(--tint)}
+footer{margin-top:48px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body><main>
+
+<h1>Using LifeReady with your team</h1>
+<p class="lead">A manager's guide to introducing LifeReady, built on the ADKAR change framework. It helps you support people through change without ever looking over their shoulder.</p>
+<p><em>Draft v0.1 for development. Not clinical, financial or HR advice.</em></p>
+
+<h2>Read this first</h2>
+<div class="note"><strong>LifeReady is a private reflection tool, not a management tool.</strong> Its value depends on people answering honestly about what matters to them. That only happens if they know you cannot see their answers.</div>
+<p>Five ground rules apply throughout:</p>
+<ul>
+<li><strong>Voluntary.</strong> Nobody is required to use it, and nobody is asked whether they did.</li>
+<li><strong>Private by default.</strong> You never see individual results. Team-level themes appear only when enough people opt in to share (suggested minimum: 8), and only as aggregates.</li>
+<li><strong>Never used in reviews.</strong> Nothing from LifeReady informs performance, promotion, rostering or redundancy decisions.</li>
+<li><strong>You are not a counsellor.</strong> If someone shares serious distress, listen, thank them, and point to your employee assistance program or a professional. Do not try to treat it.</li>
+<li><strong>Their life, their answer.</strong> Do not steer people toward a "right" outcome, including staying in the job.</li>
+</ul>
+
+<h2>When to use this guide</h2>
+<ul>
+<li>A team is going through change (restructure, new systems, reduced hours, redundancies, mergers).</li>
+<li>People are approaching a life-stage transition such as semi-retirement, returning from leave, or a change of role.</li>
+<li>You want to offer a wellbeing benefit that is practical rather than a poster on the wall.</li>
+</ul>
+
+<h2>ADKAR at a glance</h2>
+<p>ADKAR describes five things a person needs, in order, for change to stick. Most rollouts fail because leaders jump straight to <em>Ability</em> (training and features) when people have not yet reached <em>Desire</em>. Diagnose where each person is, not just where the team is.</p>
+<div class="wrap"><table>
+<tr><th>Stage</th><th>The person thinks</th><th>LifeReady supports with</th></tr>
+<tr><td>Awareness</td><td>"I see why reflection matters."</td><td>Life Map, importance vs. space</td></tr>
+<tr><td>Desire</td><td>"I want to make room for what matters."</td><td>What's missing, My Next Chapter</td></tr>
+<tr><td>Knowledge</td><td>"I know what my options are."</td><td>Experiment library, unbundling a role</td></tr>
+<tr><td>Ability</td><td>"I can actually try something."</td><td>Small experiments and reflection</td></tr>
+<tr><td>Reinforcement</td><td>"This is working, so I'll keep going."</td><td>Insights over time, check-ins</td></tr>
+</table></div>
+
+<section class="stage" style="--c:var(--a)">
+<h2>1. Awareness</h2>
+<p class="goal">People understand why this is being offered and what it is not.</p>
+<div class="lbl">Your job</div>
+<ul>
+<li>Explain the purpose in plain terms: a private tool to help people notice what matters to them and what gets space in their lives.</li>
+<li>State the privacy rules out loud, before anything else.</li>
+<li>Be honest about why now, especially if it follows a difficult announcement.</li>
+</ul>
+<div class="lbl">You might say</div>
+<div class="say">"We're offering this because change is hard on more than the calendar. It's private, optional, and I can't see anything you enter."</div>
+<div class="lbl">Watch for</div>
+<p>Suspicion that this is a disguised assessment. If you hear it, address it directly instead of defending the tool.</p>
+</section>
+
+<section class="stage" style="--c:var(--d)">
+<h2>2. Desire</h2>
+<p class="goal">People choose to engage because it is useful to them.</p>
+<div class="lbl">Your job</div>
+<ul>
+<li>Invite, do not push. Share your own experience if you have tried it and are comfortable doing so.</li>
+<li>Connect it to something people already care about, such as time, energy or the next chapter.</li>
+<li>Accept "no" without follow-up.</li>
+</ul>
+<div class="lbl">Conversation prompts</div>
+<div class="say">"If you had more room in your week, what would you put in it?"</div>
+<div class="say">"What part of your work gives you something you'd want to keep, whatever happens next?"</div>
+<div class="lbl">Watch for</div>
+<p>Enthusiasm from you being read as expectation. Low take-up is not a failure.</p>
+</section>
+
+<section class="stage" style="--c:var(--k)">
+<h2>3. Knowledge</h2>
+<p class="goal">People know what their options are and how the tool works.</p>
+<div class="lbl">Your job</div>
+<ul>
+<li>Run a short optional walkthrough (20 minutes) covering the Life Map, how results are private, and how experiments work.</li>
+<li>Explain "unbundling": work provides challenge, belonging, structure and identity, and each can be found elsewhere.</li>
+<li>Share your organisation's real options (flexible hours, phased transitions, learning budgets) so reflection can lead somewhere.</li>
+</ul>
+<div class="lbl">Watch for</div>
+<p>Insight with no path forward. If the organisation cannot offer any flexibility, say so plainly rather than implying otherwise.</p>
+</section>
+
+<section class="stage" style="--c:var(--b)">
+<h2>4. Ability</h2>
+<p class="goal">People try something small in real life.</p>
+<div class="lbl">Your job</div>
+<ul>
+<li>Protect a little time. An experiment that has to fit around a full workload will not happen.</li>
+<li>Offer optional peer groups where people share experiments they choose to talk about.</li>
+<li>Support workplace-linked experiments, such as mentoring, a learning project or a day of different work.</li>
+</ul>
+<div class="lbl">Conversation prompts</div>
+<div class="say">"Is there anything getting in the way of trying this that I could change?"</div>
+<div class="lbl">Watch for</div>
+<p>Experiments becoming another task. If people fall behind, the answer is fewer, smaller experiments.</p>
+</section>
+
+<section class="stage" style="--c:var(--r)">
+<h2>5. Reinforcement</h2>
+<p class="goal">What people learn shapes real decisions and lasts.</p>
+<div class="lbl">Your job</div>
+<ul>
+<li>Hold regular one-to-ones about the person's next chapter, led by what they choose to bring.</li>
+<li>Act on team themes you can legitimately address (workload, flexibility, learning time).</li>
+<li>Celebrate what people learned, not what they completed.</li>
+</ul>
+<div class="lbl">Watch for</div>
+<p>Fading after the launch push. Keep it light and regular instead of running a campaign.</p>
+</section>
+
+<h2>Suggested 8-week rollout</h2>
+<div class="wrap"><table>
+<tr><th>Weeks</th><th>Focus</th><th>Manager action</th></tr>
+<tr><td>1</td><td>Awareness</td><td>Team conversation on purpose and privacy</td></tr>
+<tr><td>2 to 3</td><td>Desire</td><td>Individual invitations, no follow-up on take-up</td></tr>
+<tr><td>3 to 4</td><td>Knowledge</td><td>Optional walkthrough; share real organisational options</td></tr>
+<tr><td>4 to 7</td><td>Ability</td><td>Protect time; optional peer group</td></tr>
+<tr><td>8 and on</td><td>Reinforcement</td><td>Next-chapter one-to-ones; review aggregate themes</td></tr>
+</table></div>
+
+<h2>How to tell if it is working</h2>
+<p>Do not measure individuals. Look at anonymous, opt-in signals only:</p>
+<ul>
+<li>Awareness: understanding of the tool's purpose and privacy (short pulse question).</li>
+<li>Desire and Ability: proportion of participants who tried at least one experiment.</li>
+<li>Reinforcement: participants who say it changed a real decision, and team-level themes you acted on.</li>
+</ul>
+
+<div class="warn"><strong>If someone is struggling.</strong> Signs include withdrawal, hopelessness or talk of not coping. Listen without judging, do not diagnose, thank them for telling you, and connect them with your employee assistance program or a health professional. In an emergency, contact emergency services.</div>
+
+<footer>LifeReady manager guide, draft v0.1, September 2026. ADKAR is a change management model developed by Prosci; check licensing before using the name commercially.</footer>
+</main></body></html>

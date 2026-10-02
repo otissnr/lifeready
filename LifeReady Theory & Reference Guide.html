@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LifeReady — Theory and Reference Guide</title>
+<style>
+:root{--bg:#f7fafb;--card:#fff;--ink:#17324d;--muted:#5d7083;--line:#dce7eb;--teal:#0d7f78;--tint:#e4f5f3;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1c28;--card:#172a3a;--ink:#e8f0f5;--muted:#9db0bf;--line:#2a4054;--teal:#4fd1c5;--tint:#173a3d}}
+:root[data-theme="dark"]{--bg:#0f1c28;--card:#172a3a;--ink:#e8f0f5;--muted:#9db0bf;--line:#2a4054;--teal:#4fd1c5;--tint:#173a3d}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+main{max-width:760px;margin:auto;padding:28px 20px 70px}
+h1,h2{font-family:Georgia,"Times New Roman",serif;line-height:1.2;letter-spacing:-.01em}
+.page{padding:36px 0;border-bottom:1px solid var(--line)}
+.page:last-child{border-bottom:0}
+.cover{text-align:center;padding:60px 10px 40px}
+.cover h1{font-size:clamp(34px,7vw,52px);margin:10px 0}
+.cover .sub{font-size:19px;color:var(--muted);margin-bottom:6px}
+.tag{display:inline-block;background:var(--tint);color:var(--teal);font-weight:700;font-size:13px;padding:5px 12px;border-radius:999px;margin-bottom:18px}
+h2.dim{font-size:28px;margin:0 0 4px}
+.dimtag{color:var(--muted);font-size:14px;margin-bottom:18px}
+h3{font-size:18px;margin:22px 0 6px}
+p{margin:0 0 12px}
+.m{color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0}
+.auth{border-left:3px solid var(--teal);padding:4px 0 4px 14px;margin:12px 0}
+.auth b{display:block;font-size:16px}
+.auth span{color:var(--muted);font-size:14px}
+ul{margin:6px 0 12px;padding-left:22px}li{margin:4px 0}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:480px;font-size:14px}
+th,td{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid var(--line)}
+th{background:var(--tint)}
+.pnum{text-align:right;color:var(--muted);font-size:13px;margin-top:6px}
+.disc{background:var(--tint);border:1.5px solid var(--teal);border-radius:14px;padding:16px 18px;margin:14px 0;font-size:14.5px}
+.disc b{display:block;margin-bottom:4px;font-size:15px}
+.crisis{background:#fff6dd;border:1px solid #e6d08a;border-radius:14px;padding:16px 18px;margin:14px 0;font-size:14.5px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .crisis{background:#3a3218;border-color:#6b5c25}}
+:root[data-theme="dark"] .crisis{background:#3a3218;border-color:#6b5c25}
+.crisis b{display:block;margin-bottom:4px;font-size:15px}
+footer{text-align:center;color:var(--muted);margin-top:40px;font-size:14px}
+@media print{body{background:#fff}.card,.cover{box-shadow:none}.page{page-break-after:always;border:0}main{max-width:none}}
+</style>
+</head>
+<body><main>
+
+<section class="page cover">
+<span class="tag">COMPANION REFERENCE DOCUMENT</span>
+<h1>LifeReady</h1>
+<div class="sub">Theory and reference guide</div>
+<p class="m" style="max-width:480px;margin:auto">The thinking behind each question, each awareness suggestion, and the commitment feature. Written for the team, for reviewers, and for anyone who wants to check where an idea in the app actually comes from.</p>
+<p class="m" style="margin-top:40px">Draft v0.1 &middot; October 2026</p>
+</section>
+
+<section class="page">
+<h2>1. How this guide works</h2>
+<p>LifeReady borrows ideas from several distinct fields: positive psychology, longevity and public health research, behavioural science, and a small number of named concept frameworks such as ikigai and Tiny Habits. None of this content is quoted directly from any book. Every idea in the app has been paraphrased into plain language and attributed to its source.</p>
+<p>This guide exists for three reasons:</p>
+<ul>
+<li>So the team can see, at a glance, which claim rests on which body of work.</li>
+<li>So a reviewer (psychologist, dietitian, legal) can check specific sections quickly rather than reading the whole app.</li>
+<li>So marketing and app copy can credit ideas accurately, and so we know which names are safe to mention publicly and which authors or institutions may need direct permission or licensing checks before commercial use.</li>
+</ul>
+<p class="m">A note on rigour: most of the sources below are well-regarded popular books built on peer-reviewed research, rather than peer-reviewed papers themselves. They are appropriate for a consumer wellbeing app aimed at general awareness, and are not a substitute for clinical or dietetic guidelines.</p>
+</section>
+
+<section class="page">
+<h2 class="dim">2. ❤️ Joy</h2>
+<div class="dimtag">What LifeReady asks: what do you genuinely enjoy, and how often do you feel fully absorbed in it, losing track of time?</div>
+<p>The joy dimension treats positive emotion as something worth noticing on its own, not just a side effect of other goals. Two distinct ideas sit behind it: the psychological research on what positive emotion does for us, and the practical, sensory side of what triggers it day to day.</p>
+<div class="auth"><b>Martin Seligman</b><span>Flourish; founder of positive psychology, University of Pennsylvania</span></div>
+<p>Seligman's PERMA model proposes that wellbeing is made up of five measurable elements: positive emotion, engagement, relationships, meaning, and accomplishment. LifeReady's joy dimension draws specifically on the first of these, treating small, noticed moments of positive emotion as something to build toward deliberately, rather than something that only happens by chance.</p>
+<div class="auth"><b>Ingrid Fetell Lee</b><span>Joyful: The Surprising Power of Ordinary Things to Create Extraordinary Happiness</span></div>
+<p>Fetell Lee's work looks at the physical and sensory triggers of joy: colour, light, texture, pattern. The app's suggestion to notice sensory detail, and to ask what you looked forward to as a child, both come from this more concrete, design-oriented view of joy.</p>
+</section>
+
+<section class="page">
+<h2 class="dim">3. 🌱 Growth</h2>
+<div class="dimtag">What LifeReady asks: what are you curious about, and how do you respond to setbacks?</div>
+<div class="auth"><b>Carol Dweck</b><span>Mindset: The New Psychology of Success; Stanford University</span></div>
+<p>Dweck's research distinguishes a fixed mindset, the belief that ability is mostly innate, from a growth mindset, the belief that ability develops through effort. The app's setback question and its suggestion to notice "I'm not a ___ person" thinking are both drawn directly from this distinction.</p>
+<div class="auth"><b>Angela Duckworth</b><span>Grit: The Power of Passion and Perseverance; University of Pennsylvania</span></div>
+<p>Duckworth's research found that sustained passion and perseverance toward long-term goals, which she terms grit, predicted achievement better than talent alone in several studied populations. The suggestion to reflect on what kept you going through a past challenge comes from this work.</p>
+</section>
+
+<section class="page">
+<h2 class="dim">4. 🤝 Connection</h2>
+<div class="dimtag">What LifeReady asks: who matters to you, and how connected do you feel right now?</div>
+<div class="auth"><b>Robert Waldinger and Marc Schulz</b><span>The Good Life; Harvard Study of Adult Development</span></div>
+<p>The Harvard Study of Adult Development has followed its original participants and, later, their children for over eight decades, making it one of the longest-running longitudinal studies of adult life. Its central and most widely cited finding is that the quality of close relationships was a stronger predictor of long-term happiness and health than wealth, fame, or career success. This is the single most load-bearing piece of research behind the app's connection dimension.</p>
+<div class="auth"><b>Vivek Murthy</b><span>Together: The Healing Power of Human Connection in a Sometimes Lonely World; 19th and 21st U.S. Surgeon General</span></div>
+<p>Murthy's work, including his tenure leading U.S. public health policy on loneliness, frames everyday small moments of connection, a chat with a neighbour, a call rather than a text, as cumulatively important for wellbeing, not just deep or long-standing relationships. This is the basis for the app's lighter, lower-effort connection suggestions.</p>
+</section>
+
+<section class="page">
+<h2 class="dim">5. 🧭 Purpose</h2>
+<div class="dimtag">What LifeReady asks: what gives your days meaning, and how clear are you on what would still give you meaning if work became a much smaller part of your life?</div>
+<div class="auth"><b>Viktor Frankl</b><span>Man's Search for Meaning; neurologist and psychiatrist</span></div>
+<p>Frankl's foundational work on meaning, developed from his own experience and later clinical practice, argues that meaning can be found even within difficult or constrained circumstances through the way a person chooses to respond to them. This underpins the app's suggestion to reflect on meaning found during a hard period, rather than assuming purpose only exists in comfortable circumstances.</p>
+<div class="auth"><b>Richard Leider</b><span>The Power of Purpose; Who Do You Want to Be When You Grow Old?</span></div>
+<p>Leider's work applies purpose specifically to life and career transitions, including the transition this app is designed around. His later book speaks directly to the 40 to 60 age range and the question of purpose beyond a career.</p>
+<div class="auth"><b>H&eacute;ctor Garc&iacute;a and Francesc Miralles</b><span>Ikigai: The Japanese Secret to a Long and Happy Life</span></div>
+<p>The ikigai framework, popularised by Garc&iacute;a and Miralles, describes purpose as sitting at the overlap of what a person loves, what they are good at, what the world needs, and what can sustain them. This framework is the direct conceptual inspiration for LifeReady as a whole, not just the purpose dimension.</p>
+</section>
+
+<section class="page">
+<h2 class="dim">6. 👐 Contribution</h2>
+<div class="dimtag">What LifeReady asks: where do you enjoy being useful, and how often do people come to you for help or advice?</div>
+<div class="auth"><b>Adam Grant</b><span>Give and Take; The Wharton School, University of Pennsylvania</span></div>
+<p>Grant's organisational research classifies people as givers, takers, or matchers, and found that genuine, unconditional giving was associated with stronger long-term relationships and, under the right conditions, better outcomes for the giver too. This underpins the app's framing of contribution as something that benefits the person making it, not only the recipient.</p>
+<div class="auth"><b>Arthur C. Brooks</b><span>From Strength to Strength; Harvard Kennedy School and Harvard Business School</span></div>
+<p>Brooks writes specifically about the transition many people face in their 40s, 50s and 60s, from building and striving toward teaching, mentoring and sharing what they know. This is one of the most directly relevant sources in the whole app, given LifeReady's stated audience.</p>
+</section>
+
+<section class="page">
+<h2 class="dim">7. 🏃 Physical fitness</h2>
+<div class="dimtag">What LifeReady asks: how important is staying active, what kind of movement appeals to you, and could you do a simple functional task today?</div>
+<div class="auth"><b>Peter Attia</b><span>Outlive: The Science and Art of Longevity; physician</span></div>
+<p>Attia's concept of "healthspan", remaining physically capable for everyday tasks deep into old age, rather than simply extending lifespan, underpins the app's functional question about carrying groceries up stairs. His work also informs the emphasis on strength training as protective with age, not just for younger people.</p>
+<div class="auth"><b>Dan Buettner</b><span>The Blue Zones; National Geographic Fellow</span></div>
+<p>Buettner's field research across five regions with unusually high numbers of centenarians (Okinawa, Japan; Sardinia, Italy; Nicoya, Costa Rica; Ikaria, Greece; and Loma Linda, California) found that incidental daily movement, walking, gardening, taking the stairs, was common across all five, more so than structured gym-based exercise. This underpins the app's broad approach to movement, which is not built around formal gym habits.</p>
+<div class="disc"><b>Not fitness advice.</b> The content in this dimension is general information intended to prompt reflection, and is not personal or professional fitness, exercise or medical advice. It does not account for individual health history, injury, or medical conditions. Before starting, changing, or increasing any physical activity, a person should consult a doctor, physiotherapist, exercise physiologist, or other qualified professional, and should undertake any new activity under appropriate instruction or supervision where relevant. LifeReady, its creators and operators accept no responsibility or liability for any injury, loss, or harm arising from activity undertaken on the basis of this content.</div>
+</section>
+
+<section class="page">
+<h2 class="dim">8. 🧘 Mental wellbeing and resilience</h2>
+<div class="dimtag">What LifeReady asks: over the past two weeks, how often have you felt low, flat or overwhelmed, and do you have a reliable way to recover?</div>
+<div class="auth"><b>Kelly McGonigal</b><span>The Upside of Stress; Stanford University, health psychologist</span></div>
+<p>McGonigal's research found that a person's belief about stress, specifically whether they view it as harmful or as something the body can draw on, changed its measurable physiological effects. This underpins the app's suggestion to reframe a stressful moment as preparation rather than only a threat.</p>
+<div class="auth"><b>Rick Hanson</b><span>Resilient: How to Grow an Unshakable Core of Calm, Strength, and Happiness; neuropsychologist</span></div>
+<p>Hanson's work on resilience emphasises deliberately "taking in" positive experiences for long enough that they register, and building small, consistent recovery habits rather than relying on rare, large ones. Both ideas appear directly in the app's suggestions for this dimension.</p>
+<div class="disc"><b>Not mental health advice.</b> The content in this dimension is general information intended to prompt reflection, and is not a diagnosis, psychological assessment, treatment, or professional mental health advice. It is not a substitute for care from a GP, psychologist, psychiatrist, or other qualified professional. Anyone experiencing persistent low mood, stress, anxiety, or any other mental health concern should speak with a qualified professional. LifeReady, its creators and operators accept no responsibility or liability for outcomes arising from reliance on this content in place of professional care.</div>
+<div class="crisis"><b>If you need support right now.</b> This information is general and not a substitute for professional help. If you are struggling, please reach out:
+<ul>
+<li><b>Lifeline (Australia):</b> 13 11 14, 24 hours a day</li>
+<li><b>Beyond Blue (Australia):</b> 1300 22 4636</li>
+<li><b>Emergency services (Australia):</b> 000, if you or someone else is in immediate danger</li>
+<li>Outside Australia, contact your local emergency number or a local crisis line, such as 988 in the United States or 111 in the United Kingdom, or search "crisis helpline" plus your country.</li>
+</ul>
+This same wording, or a version reviewed and approved for the relevant jurisdiction, should appear directly in the app wherever mood or stress is discussed, not only in this reference document.</div>
+</section>
+
+<section class="page">
+<h2 class="dim">9. 🥗 Healthy eating</h2>
+<div class="dimtag">What LifeReady asks: how important is eating well, which best describes how you eat day to day, and how often do you check what is in packaged food?</div>
+<div class="auth"><b>Dan Buettner</b><span>The Blue Zones</span></div>
+<p>Alongside movement, Buettner's Blue Zones research identified common dietary patterns across the five studied regions: a largely plant-based diet, whole and minimally processed foods, and eating until roughly 80 percent full rather than finishing every portion (a practice referred to in Okinawa as "Hara Hachi Bu"). This is the primary basis for the app's eating-pattern question.</p>
+<div class="auth"><b>Carlos Monteiro</b><span>Originator of the NOVA food classification system; University of S&atilde;o Paulo</span></div>
+<p>Monteiro's NOVA system classifies food by the degree and purpose of its industrial processing, rather than by its nutrient content alone, placing items into four groups from unprocessed to ultra-processed. This is the academic basis for the term "ultra-processed food" used throughout the app.</p>
+<div class="auth"><b>Chris van Tulleken</b><span>Ultra-Processed People: The Science Behind Food That Isn't Food; infectious diseases physician, University College London</span></div>
+<p>Van Tulleken's work popularised the NOVA classification for a general audience and summarised research linking diets high in ultra-processed food to a range of negative health outcomes. The app's suggestion to check ingredient labels, and its "swap one ultra-processed thing a day" experiment, both draw on this work.</p>
+<div class="auth"><b>Michael Pollan</b><span>In Defense of Food: An Eater's Manifesto; journalist and author</span></div>
+<p>Pollan's well-known plain-language summary, eat food, not too much, mostly plants, is used in the app as an accessible entry point into the more detailed ideas above.</p>
+<div class="disc"><b>Not dietary or medical advice.</b> The content in this dimension is general information intended to prompt reflection and awareness, and is not personalised dietary, nutritional, or medical advice. It does not account for individual health conditions, allergies, intolerances, medication interactions, or other personal circumstances. Before making significant changes to diet, a person should consult a doctor, accredited dietitian, or other qualified professional. LifeReady, its creators and operators accept no responsibility or liability for any harm arising from dietary choices made on the basis of this content.</div>
+</section>
+
+<section class="page">
+<h2 class="dim">10. 📝 Turning insight into action</h2>
+<div class="dimtag">The commitment feature: one focus at a time, anchored to an existing routine</div>
+<div class="auth"><b>BJ Fogg</b><span>Tiny Habits: The Small Changes That Change Everything; Stanford Behavior Design Lab</span></div>
+<p>Fogg's behaviour design research found that new habits are far more likely to stick when they are small, and when they are deliberately attached to an existing routine (an "anchor") rather than left to rely on willpower or motivation alone. This is the direct basis for the app's "After I ___, I will ___" commitment structure.</p>
+<div class="auth"><b>Peter Gollwitzer</b><span>Research on implementation intentions; New York University</span></div>
+<p>Gollwitzer's research found that pairing a specific situational trigger with a specific planned response (an "if-then" plan) substantially improved follow-through compared with a general intention alone. This underpins the if-then structure behind the Tiny Habits anchor step, and was part of the original discussion that shaped this feature.</p>
+<div class="auth"><b>James Clear</b><span>Atomic Habits</span></div>
+<p>Clear's popular synthesis of habit-formation research frames lasting change as identity-based: framing a commitment as "I am becoming someone who &hellip;" rather than as a goal to complete. This is the basis for the identity line at the top of each generated commitment card.</p>
+<p class="m">The commitment step also lets a person write their own idea instead of picking one of the five listed suggestions. This keeps the Tiny Habits structure, an anchor plus a specific action, while leaving the content itself fully in the person's own words, rather than assuming the suggestion bank will always have the right fit.</p>
+</section>
+
+<footer style="text-align:center;color:var(--muted);margin-top:40px;padding:0 20px 40px;font-size:14px">LifeReady theory and reference guide, draft v0.2, October 2026. Prepared as a companion to the LifeReady prototype and manager guide.</footer>
+</main></body></html>

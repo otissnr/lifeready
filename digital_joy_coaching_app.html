@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrated Joy Coaching Workflow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Lora', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#FDFBF7',
+                            100: '#F7F2E8',
+                            200: '#EFE4D1',
+                            500: '#D97706',
+                            600: '#B45309',
+                            800: '#332F2C',
+                            accent: '#D93829',
+                            sage: '#4A6B5B'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.03); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.15); border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-brand-50 text-brand-800 font-sans antialiased min-h-screen flex flex-col selection:bg-brand-accent selection:text-white">
+
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-brand-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-brand-accent text-white flex items-center justify-center font-bold text-xl shadow-sm">
+                    ✨
+                </div>
+                <div>
+                    <h1 class="font-bold text-base text-stone-900 leading-tight">Joy Coaching Workflow</h1>
+                    <p class="text-xs text-stone-500 font-serif italic">Integrating Seligman (PERMA) & Ingrid Fetell Lee (10 Aesthetics)</p>
+                </div>
+            </div>
+
+            <!-- Header Action Controls -->
+            <div class="flex items-center gap-3">
+                <button onclick="resetWorkflow()" class="text-xs font-semibold text-stone-500 hover:text-stone-800 px-3 py-1.5 rounded-lg border border-stone-200 hover:bg-stone-50 transition">
+                    Restart Session
+                </button>
+                <button onclick="exportSummary()" class="text-xs font-bold bg-stone-900 text-white hover:bg-stone-800 px-4 py-2 rounded-xl transition flex items-center gap-2 shadow-sm">
+                    <span>Export Client Plan</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Progress Tracker Bar -->
+        <div class="bg-brand-100 border-t border-stone-200/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-2 overflow-x-auto custom-scrollbar gap-4 text-xs font-medium text-stone-600">
+                    <button onclick="goToStep(1)" id="nav-step-1" class="flex items-center gap-2 whitespace-nowrap px-3 py-1 rounded-lg transition">
+                        <span class="w-5 h-5 rounded-full bg-stone-300 text-white font-bold flex items-center justify-center text-[10px]">1</span>
+                        <span>Phase 1: Dual Audit</span>
+                    </button>
+                    <span class="text-stone-300">➔</span>
+                    <button onclick="goToStep(2)" id="nav-step-2" class="flex items-center gap-2 whitespace-nowrap px-3 py-1 rounded-lg transition">
+                        <span class="w-5 h-5 rounded-full bg-stone-300 text-white font-bold flex items-center justify-center text-[10px]">2</span>
+                        <span>Phase 2: Triggers & Strengths</span>
+                    </button>
+                    <span class="text-stone-300">➔</span>
+                    <button onclick="goToStep(3)" id="nav-step-3" class="flex items-center gap-2 whitespace-nowrap px-3 py-1 rounded-lg transition">
+                        <span class="w-5 h-5 rounded-full bg-stone-300 text-white font-bold flex items-center justify-center text-[10px]">3</span>
+                        <span>Phase 3: Micro-Experiments</span>
+                    </button>
+                    <span class="text-stone-300">➔</span>
+                    <button onclick="goToStep(4)" id="nav-step-4" class="flex items-center gap-2 whitespace-nowrap px-3 py-1 rounded-lg transition">
+                        <span class="w-5 h-5 rounded-full bg-stone-300 text-white font-bold flex items-center justify-center text-[10px]">4</span>
+                        <span>Phase 4: Joy Architecture</span>
+                    </button>
+                    <span class="text-stone-300">➔</span>
+                    <button onclick="goToStep(5)" id="nav-step-5" class="flex items-center gap-2 whitespace-nowrap px-3 py-1 rounded-lg transition">
+                        <span class="w-5 h-5 rounded-full bg-stone-300 text-white font-bold flex items-center justify-center text-[10px]">5</span>
+                        <span>Phase 5: Executive Dashboard</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dynamic Step Workspace -->
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- STEP 1: DUAL JOY AUDIT -->
+        <section id="step-1" class="step-card space-y-8">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-brand-200 shadow-sm">
+                <div class="mb-6 border-b border-stone-100 pb-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-brand-accent bg-red-50 px-3 py-1 rounded-full">Phase 1 Diagnostic</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-stone-900 mt-2">The Dual Joy Baseline Audit</h2>
+                    <p class="text-sm text-stone-600 font-serif italic mt-1">Assess internal psychological wellbeing alongside external physical environment design.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- PERMA Assessment (Seligman) -->
+                    <div class="space-y-5 bg-brand-50 p-6 rounded-2xl border border-brand-100">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-stone-900 flex items-center gap-2">
+                                <span class="text-brand-accent">🧠</span> Internal Psychology (PERMA)
+                            </h3>
+                            <span id="permaAvgBadge" class="text-xs font-bold px-2.5 py-1 bg-white rounded-full text-brand-accent border border-red-100">Avg: 5.0 / 10</span>
+                        </div>
+                        <p class="text-xs text-stone-500">Rate baseline experience over the past 30 days (1 = Low, 10 = High):</p>
+
+                        <!-- Sliders -->
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold text-stone-700 mb-1">
+                                    <span>Positive Emotion (Pleasure, Warmth)</span>
+                                    <span id="val-p" class="text-brand-accent font-bold">5</span>
+                                </div>
+                                <input type="range" min="1" max="10" value="5" id="slider-p" oninput="updatePerma()" class="w-full accent-brand-accent">
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold text-stone-700 mb-1">
+                                    <span>Engagement (Flow & Absorption)</span>
+                                    <span id="val-e" class="text-brand-accent font-bold">5</span>
+                                </div>
+                                <input type="range" min="1" max="10" value="5" id="slider-e" oninput="updatePerma()" class="w-full accent-brand-accent">
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold text-stone-700 mb-1">
+                                    <span>Relationships (Support & Connection)</span>
+                                    <span id="val-r" class="text-brand-accent font-bold">5</span>
+                                </div>
+                                <input type="range" min="1" max="10" value="5" id="slider-r" oninput="updatePerma()" class="w-full accent-brand-accent">
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold text-stone-700 mb-1">
+                                    <span>Meaning (Belonging & Purpose)</span>
+                                    <span id="val-m" class="text-brand-accent font-bold">5</span>
+                                </div>
+                                <input type="range" min="1" max="10" value="5" id="slider-m" oninput="updatePerma()" class="w-full accent-brand-accent">
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold text-stone-700 mb-1">
+                                    <span>Accomplishment (Mastery & Pride)</span>
+                                    <span id="val-a" class="text-brand-accent font-bold">5</span>
+                                </div>
+                                <input type="range" min="1" max="10" value="5" id="slider-a" oninput="updatePerma()" class="w-full accent-brand-accent">
+                            </div>
+                        </div>
+
+                        <div id="permaDiagnosticBox" class="p-3 bg-white rounded-xl text-xs text-stone-600 border border-brand-200">
+                            <strong>Primary Focus Growth Area:</strong> <span id="lowestPermaText" class="text-brand-accent font-semibold">Positive Emotion</span>
+                        </div>
+                    </div>
+
+                    <!-- Environmental Audit (Lee) -->
+                    <div class="space-y-5 bg-amber-50/50 p-6 rounded-2xl border border-amber-100">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-stone-900 flex items-center gap-2">
+                                <span>🎨</span> Environmental Aesthetics
+                            </h3>
+                            <span id="envScoreBadge" class="text-xs font-bold px-2.5 py-1 bg-white rounded-full text-amber-700 border border-amber-200">Score: 0 / 7</span>
+                        </div>
+                        <p class="text-xs text-stone-500">Check all elements present in primary daily space (home/office):</p>
+
+                        <div class="space-y-2.5 text-xs">
+                            <label class="flex items-start gap-2.5 p-2 bg-white rounded-xl border border-amber-100 hover:bg-amber-50 cursor-pointer transition">
+                                <input type="checkbox" onchange="updateEnv()" class="env-check mt-0.5 rounded text-amber-600 focus:ring-amber-500">
+                                <span><strong>Light & Sunlight:</strong> Space receives direct natural sunlight during peak hours.</span>
+                            </label>
+                            <label class="flex items-start gap-2.5 p-2 bg-white rounded-xl border border-amber-100 hover:bg-amber-50 cursor-pointer transition">
+                                <input type="checkbox" onchange="updateEnv()" class="env-check mt-0.5 rounded text-amber-600 focus:ring-amber-500">
+                                <span><strong>Vibrant Color Pops:</strong> 2+ saturated, vibrant color accents present in room.</span>
+                            </label>
+                            <label class="flex items-start gap-2.5 p-2 bg-white rounded-xl border border-amber-100 hover:bg-amber-50 cursor-pointer transition">
+                                <input type="checkbox" onchange="updateEnv()" class="env-check mt-0.5 rounded text-amber-600 focus:ring-amber-500">
+                                <span><strong>Soft & Curved Shapes:</strong> Rounded furniture or items soften sharp geometric edges.</span>
+                            </label>
+                            <label class="flex items-start gap-2.5 p-2 bg-white rounded-xl border border-amber-100 hover:bg-amber-50 cursor-pointer transition">
+                                <input type="checkbox" onchange="updateEnv()" class="env-check mt-0.5 rounded text-amber-600 focus:ring-amber-500">
+                                <span><strong>Living Flora:</strong> Healthy indoor plants or fresh flowers visible.</span>
+                            </label>
+                            <label class="flex items-start gap-2.5 p-2 bg-white rounded-xl border border-amber-100 hover:bg-amber-50 cursor-pointer transition">
+                                <input type="checkbox" onchange="updateEnv()" class="env-check mt-0.5 rounded text-amber-600 focus:ring-amber-500">
+                                <span><strong>Visual Harmony:</strong> Surfaces are uncluttered with clear organizational structure.</span>
+                            </label>
+                            <label class="flex items-start gap-2.5 p-2 bg-white rounded-xl border border-amber-100 hover:bg-amber-50 cursor-pointer transition">
+                                <input type="checkbox" onchange="updateEnv()" class="env-check mt-0.5 rounded text-amber-600 focus:ring-amber-500">
+                                <span><strong>Play & Whimsy:</strong> At least one humorous, nostalgic, or surprising art piece/toy.</span>
+                            </label>
+                            <label class="flex items-start gap-2.5 p-2 bg-white rounded-xl border border-amber-100 hover:bg-amber-50 cursor-pointer transition">
+                                <input type="checkbox" onchange="updateEnv()" class="env-check mt-0.5 rounded text-amber-600 focus:ring-amber-500">
+                                <span><strong>Open Horizon / Vista:</strong> Sightlines toward an outside window or greenery.</span>
+                            </label>
+                        </div>
+
+                        <div id="envDiagnosisText" class="p-3 bg-white rounded-xl text-xs text-stone-600 border border-amber-200">
+                            <strong>Diagnostic Status:</strong> High Sensory Deprivation. Space may be draining energy.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-end">
+                    <button onclick="goToStep(2)" class="px-6 py-3 bg-stone-900 text-white font-bold text-xs rounded-xl hover:bg-stone-800 transition flex items-center gap-2 shadow-md">
+                        <span>Continue to Triggers & Strengths</span>
+                        <span>➔</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 2: TRIGGERS & STRENGTHS -->
+        <section id="step-2" class="step-card hidden space-y-8">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-brand-200 shadow-sm">
+                <div class="mb-6 border-b border-stone-100 pb-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-brand-accent bg-red-50 px-3 py-1 rounded-full">Phase 2 Exploration</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-stone-900 mt-2">Joy Triggers & Signature Strengths</h2>
+                    <p class="text-sm text-stone-600 font-serif italic mt-1">Map past peak experiences and core psychological character strengths.</p>
+                </div>
+
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-sm font-bold text-stone-900 mb-2 flex items-center gap-2">
+                            <span>📜</span> Joy History Mapping (Recall 3 Peak Moments of Pure Delight)
+                        </h3>
+                        <p class="text-xs text-stone-500 mb-4">Identify past moments to unlock sensory anchors and internal PERMA triggers:</p>
+
+                        <div class="space-y-4">
+                            <div class="p-4 bg-brand-50 rounded-2xl border border-brand-100 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-stone-600 mb-1">Moment 1 Description</label>
+                                    <input type="text" id="joy1-desc" placeholder="e.g. Walking on beach at sunset with friends" class="w-full text-xs p-2.5 rounded-xl border border-stone-200 bg-white">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-stone-600 mb-1">Sensory Environment (Lee Aesthetic)</label>
+                                    <input type="text" id="joy1-env" placeholder="e.g. Open horizon, warm sunlight, sound of water" class="w-full text-xs p-2.5 rounded-xl border border-stone-200 bg-white">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-stone-600 mb-1">PERMA Element Present</label>
+                                    <select id="joy1-perma" class="w-full text-xs p-2.5 rounded-xl border border-stone-200 bg-white">
+                                        <option>Positive Emotion</option>
+                                        <option>Engagement (Flow)</option>
+                                        <option>Relationships</option>
+                                        <option>Meaning</option>
+                                        <option>Accomplishment</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="p-4 bg-brand-50 rounded-2xl border border-brand-100 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-stone-600 mb-1">Moment 2 Description</label>
+                                    <input type="text" id="joy2-desc" placeholder="e.g. Completing a difficult creative design project" class="w-full text-xs p-2.5 rounded-xl border border-stone-200 bg-white">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-stone-600 mb-1">Sensory Environment (Lee Aesthetic)</label>
+                                    <input type="text" id="joy2-env" placeholder="e.g. Soft lighting, quiet room, colorful markers" class="w-full text-xs p-2.5 rounded-xl border border-stone-200 bg-white">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-stone-600 mb-1">PERMA Element Present</label>
+                                    <select id="joy2-perma" class="w-full text-xs p-2.5 rounded-xl border border-stone-200 bg-white">
+                                        <option>Engagement (Flow)</option>
+                                        <option>Positive Emotion</option>
+                                        <option>Relationships</option>
+                                        <option>Meaning</option>
+                                        <option>Accomplishment</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- VIA Character Strengths -->
+                    <div class="pt-4 border-t border-stone-100">
+                        <h3 class="text-sm font-bold text-stone-900 mb-2 flex items-center gap-2">
+                            <span>💎</span> Top 3 VIA Character Strengths
+                        </h3>
+                        <p class="text-xs text-stone-500 mb-3">Select or enter your top 3 signature strengths:</p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <input type="text" id="strength-1" placeholder="Strength 1 (e.g. Curiosity)" value="Curiosity" class="text-xs p-3 rounded-xl border border-stone-200 bg-stone-50 font-semibold text-stone-800">
+                            <input type="text" id="strength-2" placeholder="Strength 2 (e.g. Humor & Playfulness)" value="Humor & Playfulness" class="text-xs p-3 rounded-xl border border-stone-200 bg-stone-50 font-semibold text-stone-800">
+                            <input type="text" id="strength-3" placeholder="Strength 3 (e.g. Appreciation of Beauty)" value="Appreciation of Beauty" class="text-xs p-3 rounded-xl border border-stone-200 bg-stone-50 font-semibold text-stone-800">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-between">
+                    <button onclick="goToStep(1)" class="px-5 py-2.5 text-stone-600 font-bold text-xs rounded-xl hover:bg-stone-100 transition">
+                        ◀ Back
+                    </button>
+                    <button onclick="goToStep(3)" class="px-6 py-3 bg-stone-900 text-white font-bold text-xs rounded-xl hover:bg-stone-800 transition flex items-center gap-2 shadow-md">
+                        <span>Select Micro-Experiments</span>
+                        <span>➔</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 3: EXPERIMENT GENERATOR -->
+        <section id="step-3" class="step-card hidden space-y-8">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-brand-200 shadow-sm">
+                <div class="mb-6 border-b border-stone-100 pb-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-brand-accent bg-red-50 px-3 py-1 rounded-full">Phase 3 Action Design</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-stone-900 mt-2">Targeted Micro-Experiments Selection</h2>
+                    <p class="text-sm text-stone-600 font-serif italic mt-1">Select 2 core experiments for the next 7 days based on your Phase 1 diagnostic.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Internal Seligman Experiments -->
+                    <div>
+                        <h3 class="text-sm font-bold text-stone-900 mb-3 flex items-center gap-2">
+                            <span class="text-brand-accent">🧠</span> Internal Psychological Interventions (Seligman)
+                        </h3>
+                        <div class="space-y-3">
+                            <div onclick="toggleExperiment('exp-3gt')" id="exp-3gt" class="exp-card p-4 rounded-2xl border border-stone-200 hover:border-brand-accent cursor-pointer transition bg-white">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h4 class="text-xs font-bold text-stone-900">Three Good Things Journal</h4>
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-brand-accent">Positive Emotion</span>
+                                </div>
+                                <p class="text-xs text-stone-600 leading-relaxed">Write down 3 specific things that went well each night and why they happened.</p>
+                            </div>
+
+                            <div onclick="toggleExperiment('exp-acr')" id="exp-acr" class="exp-card p-4 rounded-2xl border border-stone-200 hover:border-brand-accent cursor-pointer transition bg-white">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h4 class="text-xs font-bold text-stone-900">Active-Constructive Responding</h4>
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">Relationships</span>
+                                </div>
+                                <p class="text-xs text-stone-600 leading-relaxed">Respond with enthusiastic, authentic delight when peers share good news.</p>
+                            </div>
+
+                            <div onclick="toggleExperiment('exp-gratitude')" id="exp-gratitude" class="exp-card p-4 rounded-2xl border border-stone-200 hover:border-brand-accent cursor-pointer transition bg-white">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h4 class="text-xs font-bold text-stone-900">The Gratitude Visit Letter</h4>
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">Meaning</span>
+                                </div>
+                                <p class="text-xs text-stone-600 leading-relaxed">Write and deliver a 300-word appreciation letter to an impactful mentor.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- External Lee Aesthetics -->
+                    <div>
+                        <h3 class="text-sm font-bold text-stone-900 mb-3 flex items-center gap-2">
+                            <span>🎨</span> External Environmental Experiments (Lee)
+                        </h3>
+                        <div class="space-y-3">
+                            <div onclick="toggleExperiment('exp-pop')" id="exp-pop" class="exp-card p-4 rounded-2xl border border-stone-200 hover:border-amber-500 cursor-pointer transition bg-white">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h4 class="text-xs font-bold text-stone-900">The Color & Light Injection</h4>
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">Energy Aesthetic</span>
+                                </div>
+                                <p class="text-xs text-stone-600 leading-relaxed">Add a bold saturated pillow, desk accessory, or fresh flowers to daily workspace.</p>
+                            </div>
+
+                            <div onclick="toggleExperiment('exp-soft')" id="exp-soft" class="exp-card p-4 rounded-2xl border border-stone-200 hover:border-amber-500 cursor-pointer transition bg-white">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h4 class="text-xs font-bold text-stone-900">Softening & Curve Swap</h4>
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">Play Aesthetic</span>
+                                </div>
+                                <p class="text-xs text-stone-600 leading-relaxed">Swap sharp desktop items for rounded forms, soft tactile textures, and organic lines.</p>
+                            </div>
+
+                            <div onclick="toggleExperiment('exp-flora')" id="exp-flora" class="exp-card p-4 rounded-2xl border border-stone-200 hover:border-amber-500 cursor-pointer transition bg-white">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h4 class="text-xs font-bold text-stone-900">Bringing Nature Inside</h4>
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-teal-100 text-teal-800">Renewal Aesthetic</span>
+                                </div>
+                                <p class="text-xs text-stone-600 leading-relaxed">Place a blooming plant or water feature directly within desk sightline.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-between">
+                    <button onclick="goToStep(2)" class="px-5 py-2.5 text-stone-600 font-bold text-xs rounded-xl hover:bg-stone-100 transition">
+                        ◀ Back
+                    </button>
+                    <button onclick="goToStep(4)" class="px-6 py-3 bg-stone-900 text-white font-bold text-xs rounded-xl hover:bg-stone-800 transition flex items-center gap-2 shadow-md">
+                        <span>Build Daily Joy Architecture</span>
+                        <span>➔</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 4: JOY ARCHITECTURE ROUTINE PLANNER -->
+        <section id="step-4" class="step-card hidden space-y-8">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-brand-200 shadow-sm">
+                <div class="mb-6 border-b border-stone-100 pb-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-brand-accent bg-red-50 px-3 py-1 rounded-full">Phase 4 Schedule Integration</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-stone-900 mt-2">Constructing the Daily Joy Rhythm</h2>
+                    <p class="text-sm text-stone-600 font-serif italic mt-1">Embed intentional micro-touchpoints into morning, workday, and evening transitions.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-bold text-xs text-stone-700 bg-brand-100 p-3 rounded-xl hidden sm:grid">
+                        <span>Time Block Transition</span>
+                        <span>Internal Focus (Seligman)</span>
+                        <span>External Sensory Anchor (Lee)</span>
+                    </div>
+
+                    <!-- Morning -->
+                    <div class="p-4 bg-brand-50 rounded-2xl border border-brand-100 grid grid-cols-1 sm:grid-cols-3 gap-3 items-center">
+                        <div>
+                            <span class="text-xs font-bold text-brand-accent">🌅 Morning Transition</span>
+                            <p class="text-[11px] text-stone-500">Priming Mind & Space</p>
+                        </div>
+                        <input type="text" id="rhythm-m-int" value="Gratitude intention & warm coffee savoring" class="text-xs p-2.5 rounded-xl border border-stone-200 bg-white">
+                        <input type="text" id="rhythm-m-ext" value="Open blinds for full sunlight (Energy aesthetic)" class="text-xs p-2.5 rounded-xl border border-stone-200 bg-white">
+                    </div>
+
+                    <!-- Workday -->
+                    <div class="p-4 bg-brand-50 rounded-2xl border border-brand-100 grid grid-cols-1 sm:grid-cols-3 gap-3 items-center">
+                        <div>
+                            <span class="text-xs font-bold text-brand-accent">💻 Workday Micro-Rest</span>
+                            <p class="text-[11px] text-stone-500">Flow State & Strengths</p>
+                        </div>
+                        <input type="text" id="rhythm-w-int" value="45-min distraction-free flow block using Curiosity" class="text-xs p-2.5 rounded-xl border border-stone-200 bg-white">
+                        <input type="text" id="rhythm-w-ext" value="Desk plant check-in & open window vista" class="text-xs p-2.5 rounded-xl border border-stone-200 bg-white">
+                    </div>
+
+                    <!-- Social / Evening -->
+                    <div class="p-4 bg-brand-50 rounded-2xl border border-brand-100 grid grid-cols-1 sm:grid-cols-3 gap-3 items-center">
+                        <div>
+                            <span class="text-xs font-bold text-brand-accent">🌙 Evening Wind-Down</span>
+                            <p class="text-[11px] text-stone-500">Reflection & Harmony</p>
+                        </div>
+                        <input type="text" id="rhythm-e-int" value="Write 3 Good Things in bedtime journal" class="text-xs p-2.5 rounded-xl border border-stone-200 bg-white">
+                        <input type="text" id="rhythm-e-ext" value="Dim overhead lights; warm bedside lamp (Harmony)" class="text-xs p-2.5 rounded-xl border border-stone-200 bg-white">
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-between">
+                    <button onclick="goToStep(3)" class="px-5 py-2.5 text-stone-600 font-bold text-xs rounded-xl hover:bg-stone-100 transition">
+                        ◀ Back
+                    </button>
+                    <button onclick="goToStep(5)" class="px-6 py-3 bg-brand-accent text-white font-bold text-xs rounded-xl hover:bg-red-700 transition flex items-center gap-2 shadow-md">
+                        <span>Generate Executive Dashboard</span>
+                        <span>➔</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 5: EXECUTIVE DASHBOARD SUMMARY -->
+        <section id="step-5" class="step-card hidden space-y-8">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-brand-200 shadow-sm print-area">
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-6 border-b border-stone-100 pb-6">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full">Phase 5 Final Roadmap</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-stone-900 mt-2">Client Integrated Joy Plan</h2>
+                        <p class="text-xs text-stone-500 font-serif italic mt-1">Generated Session Summary & Custom Action Plan</p>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button onclick="window.print()" class="px-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-bold rounded-xl transition">
+                            🖨 Print Summary
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Summary Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <!-- Diagnostic Breakdown -->
+                    <div class="p-5 bg-brand-50 rounded-2xl border border-brand-100">
+                        <h3 class="font-bold text-sm text-stone-900 mb-3 flex items-center gap-2">
+                            <span>📊</span> Diagnostic Baseline
+                        </h3>
+                        <div class="space-y-2 text-xs">
+                            <div class="flex justify-between py-1 border-b border-stone-200/50">
+                                <span class="text-stone-600">PERMA Psychological Score:</span>
+                                <span id="dash-perma-score" class="font-bold text-brand-accent">5.0 / 10</span>
+                            </div>
+                            <div class="flex justify-between py-1 border-b border-stone-200/50">
+                                <span class="text-stone-600">Environmental Joy Score:</span>
+                                <span id="dash-env-score" class="font-bold text-amber-700">0 / 7</span>
+                            </div>
+                            <div class="flex justify-between py-1">
+                                <span class="text-stone-600">Primary Focus Target:</span>
+                                <span id="dash-focus-target" class="font-bold text-stone-900">Positive Emotion</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Strengths & Triggers -->
+                    <div class="p-5 bg-stone-50 rounded-2xl border border-stone-200">
+                        <h3 class="font-bold text-sm text-stone-900 mb-3 flex items-center gap-2">
+                            <span>💎</span> Signature Strengths Deployed
+                        </h3>
+                        <ul id="dash-strengths-list" class="space-y-1.5 text-xs text-stone-700 font-medium">
+                            <!-- Injected dynamically -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Selected Experiments & Rhythm -->
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-sm text-stone-900 mb-3 flex items-center gap-2">
+                            <span>🚀</span> Active 7-Day Micro-Experiments
+                        </h3>
+                        <div id="dash-experiments-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-stone-100">
+                        <h3 class="font-bold text-sm text-stone-900 mb-3 flex items-center gap-2">
+                            <span>⏰</span> Customized Daily Joy Architecture
+                        </h3>
+                        <div class="space-y-2 text-xs">
+                            <div id="dash-rhythm-m" class="p-3 bg-brand-50 rounded-xl border border-brand-100">
+                                <strong>Morning:</strong> Gratitude intention & warm coffee savoring + Sunlight
+                            </div>
+                            <div id="dash-rhythm-w" class="p-3 bg-brand-50 rounded-xl border border-brand-100">
+                                <strong>Workday:</strong> Flow block + Desk flora check-in
+                            </div>
+                            <div id="dash-rhythm-e" class="p-3 bg-brand-50 rounded-xl border border-brand-100">
+                                <strong>Evening:</strong> 3 Good Things Journal + Dim warm lighting
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reflection Footer Prompt -->
+                <div class="mt-8 p-4 bg-red-50/60 rounded-2xl border border-red-100 text-center text-xs text-stone-700 font-serif">
+                    "Broad life satisfaction is built out of accumulated moments of acute joy, supported by deep psychological alignment."
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        let currentStep = 1;
+        let perma = { p: 5, e: 5, r: 5, m: 5, a: 5 };
+        let envCount = 0;
+        let selectedExperiments = new Set(['exp-3gt', 'exp-pop']);
+
+        function goToStep(step) {
+            currentStep = step;
+            document.querySelectorAll('.step-card').forEach((el, index) => {
+                el.classList.toggle('hidden', index + 1 !== step);
+            });
+
+            // Update Progress Nav UI
+            for (let i = 1; i <= 5; i++) {
+                const navBtn = document.getElementById(`nav-step-${i}`);
+                if (!navBtn) continue;
+                const badge = navBtn.querySelector('span');
+
+                if (i === step) {
+                    navBtn.className = "flex items-center gap-2 whitespace-nowrap px-3 py-1 rounded-lg bg-stone-900 text-white font-bold transition shadow-sm";
+                    if (badge) badge.className = "w-5 h-5 rounded-full bg-brand-accent text-white font-bold flex items-center justify-center text-[10px]";
+                } else if (i < step) {
+                    navBtn.className = "flex items-center gap-2 whitespace-nowrap px-3 py-1 rounded-lg text-stone-800 bg-brand-200/60 font-semibold transition";
+                    if (badge) badge.className = "w-5 h-5 rounded-full bg-stone-700 text-white font-bold flex items-center justify-center text-[10px]";
+                } else {
+                    navBtn.className = "flex items-center gap-2 whitespace-nowrap px-3 py-1 rounded-lg text-stone-500 hover:text-stone-800 transition";
+                    if (badge) badge.className = "w-5 h-5 rounded-full bg-stone-300 text-white font-bold flex items-center justify-center text-[10px]";
+                }
+            }
+
+            if (step === 5) {
+                updateDashboard();
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updatePerma() {
+            perma.p = parseInt(document.getElementById('slider-p').value);
+            perma.e = parseInt(document.getElementById('slider-e').value);
+            perma.r = parseInt(document.getElementById('slider-r').value);
+            perma.m = parseInt(document.getElementById('slider-m').value);
+            perma.a = parseInt(document.getElementById('slider-a').value);
+
+            document.getElementById('val-p').textContent = perma.p;
+            document.getElementById('val-e').textContent = perma.e;
+            document.getElementById('val-r').textContent = perma.r;
+            document.getElementById('val-m').textContent = perma.m;
+            document.getElementById('val-a').textContent = perma.a;
+
+            const avg = ((perma.p + perma.e + perma.r + perma.m + perma.a) / 5).toFixed(1);
+            document.getElementById('permaAvgBadge').textContent = `Avg: ${avg} / 10`;
+
+            // Calculate lowest scoring element
+            const items = [
+                { name: "Positive Emotion", score: perma.p },
+                { name: "Engagement (Flow)", score: perma.e },
+                { name: "Relationships", score: perma.r },
+                { name: "Meaning & Purpose", score: perma.m },
+                { name: "Accomplishment", score: perma.a }
+            ];
+            items.sort((a, b) => a.score - b.score);
+            document.getElementById('lowestPermaText').textContent = `${items[0].name} (${items[0].score}/10)`;
+        }
+
+        function updateEnv() {
+            const checks = document.querySelectorAll('.env-check:checked');
+            envCount = checks.length;
+            document.getElementById('envScoreBadge').textContent = `Score: ${envCount} / 7`;
+
+            const diag = document.getElementById('envDiagnosisText');
+            if (envCount <= 3) {
+                diag.innerHTML = "<strong>Diagnostic Status:</strong> High Sensory Deprivation. Space may be draining daily vitality.";
+            } else if (envCount <= 5) {
+                diag.innerHTML = "<strong>Diagnostic Status:</strong> Moderate Alignment. Small aesthetic tweaks will yield high impact.";
+            } else {
+                diag.innerHTML = "<strong>Diagnostic Status:</strong> High Environmental Resonance. Space actively nurtures joy.";
+            }
+        }
+
+        function toggleExperiment(id) {
+            const card = document.getElementById(id);
+            if (selectedExperiments.has(id)) {
+                selectedExperiments.delete(id);
+                card.classList.remove('ring-2', 'ring-brand-accent', 'bg-red-50/30');
+            } else {
+                selectedExperiments.add(id);
+                card.classList.add('ring-2', 'ring-brand-accent', 'bg-red-50/30');
+            }
+        }
+
+        function updateDashboard() {
+            const avgPerma = ((perma.p + perma.e + perma.r + perma.m + perma.a) / 5).toFixed(1);
+            document.getElementById('dash-perma-score').textContent = `${avgPerma} / 10`;
+            document.getElementById('dash-env-score').textContent = `${envCount} / 7`;
+            document.getElementById('dash-focus-target').textContent = document.getElementById('lowestPermaText').textContent;
+
+            // Strengths
+            const s1 = document.getElementById('strength-1').value || 'Curiosity';
+            const s2 = document.getElementById('strength-2').value || 'Humor';
+            const s3 = document.getElementById('strength-3').value || 'Beauty';
+            document.getElementById('dash-strengths-list').innerHTML = `
+                <li class="flex items-center gap-2"><span class="text-brand-accent font-bold">✓</span> ${s1}</li>
+                <li class="flex items-center gap-2"><span class="text-brand-accent font-bold">✓</span> ${s2}</li>
+                <li class="flex items-center gap-2"><span class="text-brand-accent font-bold">✓</span> ${s3}</li>
+            `;
+
+            // Active Experiments
+            const expContainer = document.getElementById('dash-experiments-list');
+            expContainer.innerHTML = '';
+            if (selectedExperiments.size === 0) {
+                expContainer.innerHTML = '<p class="text-stone-400 font-serif italic">No experiments selected.</p>';
+            } else {
+                selectedExperiments.forEach(expId => {
+                    const originalEl = document.getElementById(expId);
+                    if (originalEl) {
+                        const title = originalEl.querySelector('h4').textContent;
+                        const desc = originalEl.querySelector('p').textContent;
+                        expContainer.innerHTML += `
+                            <div class="p-3 bg-brand-50 rounded-xl border border-brand-100">
+                                <strong class="text-brand-accent">${title}:</strong>
+                                <span class="text-stone-600"> ${desc}</span>
+                            </div>
+                        `;
+                    }
+                });
+            }
+
+            // Rhythm
+            document.getElementById('dash-rhythm-m').innerHTML = `<strong>Morning:</strong> ${document.getElementById('rhythm-m-int').value} | <em>${document.getElementById('rhythm-m-ext').value}</em>`;
+            document.getElementById('dash-rhythm-w').innerHTML = `<strong>Workday:</strong> ${document.getElementById('rhythm-w-int').value} | <em>${document.getElementById('rhythm-w-ext').value}</em>`;
+            document.getElementById('dash-rhythm-e').innerHTML = `<strong>Evening:</strong> ${document.getElementById('rhythm-e-int').value} | <em>${document.getElementById('rhythm-e-ext').value}</em>`;
+        }
+
+        function exportSummary() {
+            goToStep(5);
+            setTimeout(() => { window.print(); }, 300);
+        }
+
+        function resetWorkflow() {
+            if (confirm("Reset current coaching session data?")) {
+                location.reload();
+            }
+        }
+
+        // Initialize UI
+        toggleExperiment('exp-3gt');
+        toggleExperiment('exp-pop');
+        updatePerma();
+        updateEnv();
+    </script>
+</body>
+</html>
