@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LifeReady prototype</title>
+<style>
+:root{--bg:#f7fafb;--card:#fff;--ink:#17324d;--muted:#5d7083;--line:#dce7eb;--teal:#0d7f78;--tint:#e4f5f3;--on:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1c28;--card:#172a3a;--ink:#e8f0f5;--muted:#9db0bf;--line:#2a4054;--teal:#4fd1c5;--tint:#173a3d;--on:#0f1c28}}
+:root[data-theme="dark"]{--bg:#0f1c28;--card:#172a3a;--ink:#e8f0f5;--muted:#9db0bf;--line:#2a4054;--teal:#4fd1c5;--tint:#173a3d;--on:#0f1c28}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+main{max-width:560px;margin:auto;padding:20px 18px 56px}
+h1,h2{font-family:Georgia,"Times New Roman",serif;line-height:1.2;margin:0 0 10px}
+h1{font-size:clamp(32px,8vw,44px)}h2{font-size:25px}h3{margin:20px 0 6px;font-size:18px}
+p{margin:0 0 12px}.m{color:var(--muted)}.s{font-size:15px}
+.bar{height:5px;background:var(--line);border-radius:9px;margin-bottom:22px}.bar i{display:block;height:100%;background:var(--teal);border-radius:9px}
+.opt{display:block;width:100%;text-align:left;font:inherit;color:inherit;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;margin:9px 0;cursor:pointer}
+.opt.on{border-color:var(--teal);background:var(--tint)}
+.btn{font:inherit;font-weight:700;background:var(--teal);color:var(--on);border:0;border-radius:999px;padding:14px 22px;cursor:pointer;margin-top:12px}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.hintmsg{font-size:13px;color:var(--muted);margin:6px 0 0}
+.link{background:none;border:0;font:inherit;color:var(--muted);padding:14px 10px 0 0;cursor:pointer;text-decoration:underline}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:8px 0 4px}
+.scale button{font:inherit;font-weight:700;color:inherit;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:14px 0;cursor:pointer}
+.scale button.on{background:var(--teal);color:var(--on);border-color:var(--teal)}
+.ends{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:12px 0}
+.row{margin:14px 0}.row b{display:block;margin-bottom:4px}
+.tr{height:9px;background:var(--line);border-radius:9px;margin:3px 0;overflow:hidden}.tr i{display:block;height:100%}
+.imp{background:var(--teal)}.spc{background:#e0a12b}
+.key{font-size:13px;color:var(--muted);margin-top:8px}
+.pill{display:inline-block;background:var(--tint);border-radius:999px;padding:3px 11px;font-size:13px;font-weight:700;margin:0 6px 6px 0}
+.sugg{margin:8px 0;padding:10px 0;border-top:1px solid var(--line)}
+.sugg:first-of-type{border-top:0}
+.attrib{display:block;color:var(--muted);font-size:13px;margin-top:3px}
+.why{font-size:14.5px;color:var(--muted);margin:6px 0 10px}
+.echo{font-size:14.5px;color:var(--ink);background:var(--tint);border-radius:10px;padding:7px 11px;margin:8px 0;display:inline-block}
+.noteout{border-left:3px solid var(--teal);padding:6px 0 6px 12px;margin:8px 0;font-style:italic}
+.noteq{display:block;font-style:normal;font-size:12.5px;color:var(--muted);margin-bottom:2px}
+.lite{padding:10px 0;border-top:1px solid var(--line)}
+.lite:first-of-type{border-top:0}
+details{margin:14px 0}
+summary{cursor:pointer;font-weight:700;font-family:Georgia,serif;font-size:19px;padding:4px 0}
+.txt{width:100%;font:inherit;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:inherit;margin:6px 0 14px}
+.note{width:100%;font:inherit;font-size:15px;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:inherit;margin:4px 0 16px;min-height:64px;resize:vertical}
+.blank{background:var(--tint);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:14px;color:var(--muted);margin:10px 0}
+.commit{background:var(--tint);border:1.5px solid var(--teal);border-radius:16px;padding:20px;margin:14px 0;font-family:Georgia,serif;font-size:19px;line-height:1.5}
+.okmsg{font-size:13px;color:var(--teal);font-weight:700;height:18px;margin-top:-8px}
+button:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+</style>
+</head>
+<body><main id="app"></main>
+<script>
+var ING=[
+{k:'joy',e:'\u2764\ufe0f',n:'Joy',q:'What do you genuinely enjoy and look forward to?',h:'Hobbies, trips, people, anything that makes time disappear.',why:'Joy is not a luxury to fit in once everything else is done, it is one of the simplest signs that your life has room in it for you. Noticing what actually lights you up, and making space for more of it, is one of the most reliable sources of lasting wellbeing we have evidence for.',
+mq:'How often do you feel fully absorbed in something you enjoy, losing track of time?',mo:['Often','Sometimes','Rarely','Almost never'],qLabel:'Feeling fully absorbed',
+sg:[
+{w:'Often',t:'Notice what made that moment work, and look for ways to build more of it into an ordinary week.',a:'Martin Seligman, positive psychology research'},
+{w:'Sometimes',t:'Pause for ten seconds on something good when it happens today, rather than rushing past it.',a:'Martin Seligman, positive psychology research'},
+{t:'Pay attention to small sensory details that lift a moment: colour, texture, sound, light.',a:'Ingrid Fetell Lee, Joyful'},
+{w:'Rarely',t:'Ask what you looked forward to as a kid that you have quietly dropped.',a:'Ingrid Fetell Lee, Joyful'},
+{t:'Keep a short running list of small joys for a week. No analysis needed, just noticing.',a:'Martin Seligman, positive psychology research'}
+]},
+{k:'growth',e:'\ud83c\udf31',n:'Growth',q:'What are you curious about, or keen to get better at?',h:'A skill, a subject, a project that stretches you.',why:'A sense of still growing, still curious, still capable of learning something new, is closely tied to how resilient and engaged people feel at every stage of life, not just early in a career. Growth keeps a life interesting from the inside, whatever is happening on the outside.',
+mq:'When you hit a setback, what feels more natural for you?',mo:['I push through','I get discouraged','Depends on the day'],qLabel:'Response to setbacks',
+sg:[
+{w:'I get discouraged',t:'Notice when you think "I\u2019m not a ___ person". That is a fixed-mindset signal worth questioning.',a:'Carol Dweck, Mindset'},
+{t:'Pick one skill and track your effort, not just the result, for two weeks.',a:'Carol Dweck, Mindset'},
+{w:'I push through',t:'Reflect on what kept you going through a past challenge. Consistency over time often matters more than talent.',a:'Angela Duckworth, Grit'},
+{t:'Deliberately try something you will likely be bad at first. Notice how it feels to be a beginner again.',a:'Carol Dweck, Mindset'},
+{w:'Depends on the day',t:'Replace "I failed" with "I\u2019m not there yet" for one week and see what shifts.',a:'Carol Dweck, Mindset'}
+]},
+{k:'connection',e:'\ud83e\udd1d',n:'Connection',q:'Who matters to you, and where do you belong?',h:'Family, friends, clubs, community. Include the workplace community you might miss.',why:'Of everything studied across decades of research into what makes a good life, the strength of our relationships consistently stands out as the strongest predictor of long-term happiness and health. Who you spend time with, and how well, may matter more than almost anything else here.',
+mq:'Which feels more true for you right now?',mo:['A few close relationships','Many people, few close ones','I feel fairly isolated','I feel well connected'],qLabel:'How connected you feel',
+sg:[
+{t:'Relationship quality predicted long-term wellbeing better than money or fame in the longest-running study on adult life. Which one relationship is worth investing in this month?',a:'Robert Waldinger and Marc Schulz, The Good Life, Harvard Study of Adult Development'},
+{w:'I feel fairly isolated',t:'Small moments of connection through the day, a chat with a neighbour, a call instead of a text, add up more than people expect.',a:'Vivek Murthy, Together'},
+{t:'Notice a relationship that has gone quiet. A short message costs little.',a:'Robert Waldinger and Marc Schulz, The Good Life'},
+{w:'Many people, few close ones',t:'Identify one group or community where you feel you belong, and one where you used to.',a:'Vivek Murthy, Together'},
+{t:'Plan one recurring catch-up rather than a one-off. Consistency is what built relationships in the Harvard study.',a:'Robert Waldinger and Marc Schulz, The Good Life'}
+]},
+{k:'purpose',e:'\ud83e\udded',n:'Purpose',q:'What currently gives your days meaning?',h:'Something worth getting up for, whether or not anyone pays you.',why:'Purpose is what turns an ordinary day into something worth getting up for. It does not have to come from paid work, and for many people going through a transition, finding it elsewhere is exactly what makes the change feel like a beginning rather than a loss.',
+mq:'How clear are you on what would still give your days meaning if work became a much smaller part of your life?',mo:['I know exactly','I have some ideas','I genuinely have no idea'],qLabel:'Clarity on purpose beyond work',
+sg:[
+{w:'I genuinely have no idea',t:'Meaning can be found even in difficult circumstances, through how we choose to respond to them. What meaning have you found in a hard period of your life?',a:'Viktor Frankl, Man\u2019s Search for Meaning'},
+{t:'Try sketching four circles: what you love, what you are good at, what the world needs, what sustains you. Purpose often sits where they overlap.',a:'H\u00e9ctor Garc\u00eda and Francesc Miralles, Ikigai'},
+{w:'I have some ideas',t:'Ask what gifts you have, what you care about and what the world needs right now. Where do those overlap for you?',a:'Richard Leider, The Power of Purpose'},
+{t:'Ask what you would still want to do if nobody paid you and nobody knew.',a:'Richard Leider, Who Do You Want to Be When You Grow Old?'},
+{w:'I know exactly',t:'Notice the moments this week when time disappeared. They often point toward purpose.',a:'H\u00e9ctor Garc\u00eda and Francesc Miralles, Ikigai'}
+]},
+{k:'contribution',e:'\ud83d\udc50',n:'Contribution',q:'Where do you enjoy being useful to others?',h:'Mentoring, sharing expertise, volunteering, helping family or neighbours.',why:'Being useful to someone else, in ways large or small, is one of the most underrated sources of meaning we have. It does not need a title or a salary attached to it, and for many people it becomes more, not less, important once work takes up less of their time.',
+mq:'How often do people come to you for help or advice?',mo:['Often','Sometimes','Rarely, or not sure'],qLabel:'Asked for help or advice',
+sg:[
+{w:'Often',t:'People who help without expecting anything back tend to report higher long-term wellbeing. Where could you give a little more of what you already offer?',a:'Adam Grant, Give and Take'},
+{t:'The second half of life often shifts from building things yourself to teaching or mentoring others. Who could you mentor or teach?',a:'Arthur C. Brooks, From Strength to Strength'},
+{w:'Rarely, or not sure',t:'Notice who asks you for help or advice, even informally. That is often a signal of where you are useful.',a:'Adam Grant, Give and Take'},
+{t:'Offer one piece of expertise for free this month and notice how it feels.',a:'Adam Grant, Give and Take'},
+{t:'Reflect on contributions that have nothing to do with paid work: family, community, care.',a:'Arthur C. Brooks, From Strength to Strength'}
+]},
+{k:'fitness',noNote:1,e:'\ud83c\udfc3',n:'Physical fitness',q:'How important is staying strong and active for the years ahead?',h:'Gym, yoga, Pilates, walking, swimming, cycling, a team sport. Whatever you would actually keep doing.',why:'Staying physically capable is not about chasing an appearance, it is about protecting your ability to do the things that matter to you for as long as possible, carrying your own shopping, keeping up on a walk, playing with grandchildren. The years ahead feel longer when your body can still keep up with your plans.',s:'How well does your current routine support this?',qLabel:'Movement habits',
+sg:[
+{t:'Think in terms of healthspan, staying physically capable in your 80s, not just alive. What one everyday movement, carrying, climbing stairs, getting off the floor, do you want to still do easily then?',a:'Peter Attia, Outlive'},
+{t:'Movement built into daily life, walking, gardening, taking the stairs, mattered as much as formal exercise in the longest-lived communities studied.',a:'Dan Buettner, The Blue Zones'},
+{t:'Strength training becomes more protective, not less, with age. If you have never lifted anything, a beginner session still counts.',a:'Peter Attia, Outlive'},
+{t:'Book one session or class this week rather than planning it for later.',a:'Dan Buettner, The Blue Zones'},
+{t:'Track energy, not just weight or appearance, as your marker of progress.',a:'Peter Attia, Outlive'}
+]},
+{k:'resilience',noNote:1,e:'\ud83e\uddd8',n:'Mental wellbeing',q:'Over the past two weeks, how often have you felt low, flat or overwhelmed?',h:'This is a check-in, not a diagnosis. There are no wrong answers, and you can skip it.',why:'How well you handle stress and bounce back from setbacks shapes almost everything else here, since a mind under constant pressure has little room left for joy, connection or growth. Paying attention to this early is far easier than waiting for it to become a crisis.',qLabel:'Feeling low or overwhelmed',
+mq:'Do you have a reliable way to recover when stressed?',mo:['Yes, a go-to habit','Sometimes','Not really'],
+sg:[
+{t:'Believing stress can be harnessed changes its physical effect on the body. Try naming what a stressful moment this week might be preparing you for.',a:'Kelly McGonigal, The Upside of Stress'},
+{t:'Deliberately pause on a positive moment for longer than usual, long enough that it actually sticks, rather than letting it slide by.',a:'Rick Hanson, Resilient'},
+{t:'Notice your early warning signs of overload, sleep, irritability, appetite, before they build up.',a:'Rick Hanson, Resilient'},
+{t:'One small, protected recovery habit, a walk, a breathing break, matters more than one big habit you never actually do.',a:'Rick Hanson, Resilient'},
+{t:'If low mood or stress has been frequent, treat it as information worth discussing with a GP, not a personal failing.',a:'Kelly McGonigal, The Upside of Stress'}
+]},
+{k:'nutrition',noNote:1,e:'\ud83e\udd57',n:'Healthy eating',q:'How important is eating well to you for a long, healthy life?',h:'Not a diet. More about building meals around whole foods and being aware of how much ultra-processed food is in your week.',why:'What you eat day to day quietly shapes your energy, your mood and your long-term health, often more than any single big decision does. This is not about a perfect diet, it is simply about being aware enough to make the small choices that add up over years, not days.',s:'How much of what you eat day to day is whole food, rather than packaged and ultra-processed?',qLabel:'Everyday eating pattern',
+sg:[
+{t:'A simple, well-known lens for most meals: eat food, not too much, mostly plants.',a:'Michael Pollan, In Defense of Food'},
+{t:'Try checking labels for ingredients you would not find in a home kitchen. A quick awareness habit, not a ban on anything.',a:'Chris van Tulleken, Ultra-Processed People'},
+{t:'Food can be grouped by how industrially processed it is, not just its nutrients. Notice how many heavily processed items are in your week.',a:'Carlos Monteiro, originator of the NOVA food classification'},
+{t:'The world\u2019s longest-lived communities tend to eat until about 80 percent full rather than finishing every plate.',a:'Dan Buettner, The Blue Zones, "Hara Hachi Bu"'},
+{t:'Pick the ultra-processed food you eat most often and try a whole-food swap for one week, just to notice the difference.',a:'Chris van Tulleken, Ultra-Processed People'}
+]}
+];
+var SHAPE=['Fewer days in my current role','Different work on my terms (part-time, consulting, a new field)','Building something of my own','Stopping paid work altogether',"I honestly don't know yet"];
+var SHT=['Test a shorter week for a month, or ask what a phased reduction could look like.','Have three coffee conversations with people already doing the work you imagine.','Sketch the smallest version of it in two hours, then test it with one real person.',"Live one ordinary weekday as though you weren't working. Notice how it feels.",'Not knowing is a fine start. Pick the smallest experiment below.'];
+var HOR=['Within a year','1 to 3 years','3 to 5 years','More than 5 years','Not sure'];
+var GIVE=['Challenge','Belonging','Structure','Identity','Learning','Being useful','Status','Income'];
+var IDEAS={
+Challenge:['Take on a short project or stretch task outside your usual role, paid or not.','Join a board, committee or working group that needs a real problem solved.'],
+Belonging:['Join a club, class or regular meet-up built around something you already enjoy.','Reconnect with a professional or community group you have let lapse.'],
+Structure:['Build a simple weekly rhythm around two or three fixed commitments, even small ones.','Block the same morning hours each week for something that matters to you.'],
+Identity:['Pick one role you want to grow into, such as mentor, maker or coach, and start telling people that is what you do.','Try on a new identity for a month, for example "the person who runs" or "the person who writes."'],
+Learning:['Enrol in a short course or workshop in something you have always been curious about.','Start a regular study habit, even twenty minutes a few times a week.'],
+'Being useful':['Offer to mentor someone earlier in a path you have already walked.','Volunteer your specific skills to a cause or organisation you care about.'],
+Status:['Find a community where your experience is genuinely valued and visible.','Take on a role, formal or informal, where people look to you for judgement.'],
+Income:['Explore part-time, consulting or portfolio work in your field.','Test a small income idea on the side before committing to it fully.']};
+var FOOD=["Mostly home-cooked, whole foods","A mix of home-cooked and packaged convenience food","Mostly packaged, convenience or takeaway food","Not sure"];
+var MOVE=['Gym or weights','Yoga','Pilates','Walking or hiking','Cycling','Swimming','Team sport','Racquet sport','Dance'];
+var FREQ=['Rarely','1 to 2 times a week','3 to 4 times a week','Most days'];
+var MOODFREQ=['Rarely','Sometimes','Often','Most days'];
+var MOODSPACE={'Rarely':5,'Sometimes':3,'Often':2,'Most days':1};
+var IDENT={joy:'someone who makes room for joy',growth:'someone who keeps learning',connection:'someone who stays connected',purpose:'someone who lives with purpose',contribution:'someone who contributes',fitness:'someone who moves',resilience:'someone who looks after their mind',nutrition:'someone who eats well'};
+var ANCHOR=['my morning coffee','my commute','my lunch break','I sit down for dinner','I brush my teeth at night','Sunday evening planning','I walk the dog','I finish work for the day'];
+var steps=[{t:'shape'},{t:'hor'},{t:'give'},{t:'keep'}];
+ING.forEach(function(g,i){steps.push({t:'ing',i:i});if(g.k==='fitness')steps.push({t:'move'})});
+steps.push({t:'food'},{t:'money'});
+var a={give:[],keep:[],like:[]},n=-1,c={},app=document.getElementById('app');
+function sel(k,v){a[k]=v;draw()}
+function tog(k,v){var l=a[k],i=l.indexOf(v);i<0?l.push(v):l.splice(i,1);draw()}
+function go(d){n+=d;while(steps[n]&&steps[n].t==='keep'&&!a.give.length)n+=d;draw();window.scrollTo(0,0)}
+function opts(k,list,multi){return list.map(function(o){var on=multi?a[k].indexOf(o)>-1:a[k]===o;return '<button class="opt'+(on?' on':'')+'" aria-pressed="'+on+'" onclick="'+(multi?'tog':'sel')+"('"+k+"',"+JSON.stringify(o).replace(/"/g,'&quot;')+')">'+o+'</button>'}).join('')}
+function scale(k,lo,hi){return '<div class="scale">'+[1,2,3,4,5].map(function(v){return '<button class="'+(a[k]===v?'on':'')+'" aria-pressed="'+(a[k]===v)+'" onclick="sel(\''+k+'\','+v+')">'+v+'</button>'}).join('')+'</div><div class="ends"><span>'+lo+'</span><span>'+hi+'</span></div>'}
+function nav(ok){return '<button class="btn" '+(ok?'':'disabled')+' onclick="go(1)">Next</button>'+(ok?'':'<div class="hintmsg">Choose an answer above to continue.</div>')+'<br><button class="link" onclick="go(-1)">Back</button><button class="link" onclick="go(1)">Skip</button>'}
+function suggCard(s){return '<div class="sugg">'+s.t+'<span class="attrib">Idea from '+s.a+'</span></div>'}
+function library(){var h='<h1>Awareness idea library</h1><p class="m">A short list of reflections and small practices for each dimension, drawn from recognised authors and researchers. Read freely, whether or not you have done the assessment.</p>';
+ING.forEach(function(g){h+='<details><summary>'+g.e+' '+g.n+'</summary>'+g.sg.map(suggCard).join('')+'</details>'});
+h+='<button class="btn" onclick="n=-1;draw()">Back</button>';app.innerHTML=h}
+function echoLine(g){var p=[];
+if(g.k==='fitness'){if(a.like&&a.like.length)p.push('Drawn to '+a.like.join(', '));if(a.freq)p.push('Moves '+a.freq.toLowerCase());if(a.func)p.push('Stairs with groceries: '+a.func)}
+else if(g.k==='resilience'){if(a.mood)p.push(g.qLabel+': '+a.mood);if(a.resilienceM)p.push('Reliable recovery habit: '+a.resilienceM)}
+else if(g.k==='nutrition'){if(a.food)p.push(a.food);if(a.label)p.push('Checks labels: '+a.label)}
+else if(a[g.k+'M'])p.push(g.qLabel+': '+a[g.k+'M']);
+return p.join(' &middot; ')}
+function noteBlock(g){var note=a[g.k+'N'];if(!note||!note.trim())return '';return '<div class="noteout"><span class="noteq">'+g.q+'</span>'+note.trim()+'</div>'}
+function bars(g,i,sv){return '<div class="tr"><i class="imp" style="width:'+(i*20)+'%"></i></div><div class="tr"><i class="spc" style="width:'+(sv*20)+'%"></i></div>'}
+function reason(g,gap){if(gap>=3)return g.n+' clearly matters to you, but right now gets very little room. That wide gap is exactly why a small, deliberate step here is likely to make a real difference.';
+if(gap>=2)return g.n+' matters more to you than the room it currently gets. Closing even part of that gap is likely to be noticeable.';
+return 'Worth a small step here, even though this is not your biggest gap right now.'}
+function pick(g){var arr=g.sg.filter(function(x){return x.w&&a[g.k+'M']===x.w});var def=g.sg.filter(function(x){return !x.w});return (arr.concat(def)).slice(0,2)}
+function gID(k){for(var i=0;i<ING.length;i++)if(ING[i].k===k)return ING[i]}
+function commitDraw(){
+var g=gID(c.dim),h='<div class="bar"><i style="width:'+((c.step+1)/4*100)+'%"></i></div>';
+if(c.step===0){h+='<h2>Pick one thing to focus on</h2><p class="m s">Just one. The rest will still be here later.</p>'+ING.map(function(x){return '<button class="opt'+(c.dim===x.k?' on':'')+'" onclick="c.dim=\''+x.k+'\';draw()">'+x.e+' '+x.n+'</button>'}).join('')+'<button class="btn" onclick="c.step=1;draw()">Next</button><br><button class="link" onclick="n=-1;draw()">Back to results</button>'}
+else if(c.step===1){h+='<p class="m s">'+g.e+' '+g.n+'</p><h2>Which idea do you want to try?</h2>'+g.sg.map(function(x,i){return '<button class="opt'+(c.act===i&&!c.custom?' on':'')+'" onclick="c.act='+i+';c.custom=\'\';draw()">'+x.t+'<span class="attrib">'+x.a+'</span></button>'}).join('')+'<h3>Or write your own</h3><p class="m s">None of these quite it? Put it in your own words.</p><textarea class="note" id="customact" placeholder="What do you actually want to try?" oninput="c.custom=this.value;c.act=null">'+(c.custom||'')+'</textarea><button class="btn" '+((c.act!=null||(c.custom&&c.custom.trim()))?'':'disabled')+' onclick="c.step=2;c.action=(c.custom&&c.custom.trim())?c.custom.trim():g_text();draw()">Next</button><br><button class="link" onclick="c.step=0;draw()">Back</button>'}
+else if(c.step===2){h+='<h2>Anchor it to something you already do</h2><p class="m s">New habits stick best when attached to a routine that already happens, rather than added as one more task.<span class="attrib">Idea from BJ Fogg, Tiny Habits</span></p><h3>After...</h3>'+ANCHOR.map(function(x){return '<button class="opt'+(c.anchor===x?' on':'')+'" onclick="c.anchor=\''+x.replace(/'/g,"\\'")+'\';draw()">'+x+'</button>'}).join('')+'<h3>...I will</h3><input class="txt" id="actedit" value="'+(c.action||'').replace(/"/g,'&quot;')+'" oninput="c.action=this.value"><button class="btn" '+(c.anchor&&c.action?'':'disabled')+' onclick="c.step=3;draw()">Next</button><br><button class="link" onclick="c.step=1;draw()">Back</button>'}
+else{h='<h2>Your commitment</h2><p class="m s">Read it back to yourself. Change the wording until it sounds like you.</p><div class="commit">I\'m becoming '+(IDENT[g.k]||'someone who makes room for this')+'.<br><br>After '+c.anchor+', I will '+c.action+'.</div><h3>Who might notice, or who could you tell?</h3><input class="txt" id="whoedit" value="'+(c.who||'').replace(/"/g,'&quot;')+'" oninput="c.who=this.value" placeholder="Optional"><div class="okmsg" id="okmsg"></div><button class="btn" onclick="copyCommit()">Copy commitment</button><br><button class="link" onclick="c.step=2;draw()">Edit</button><br><button class="link" onclick="n=-1;draw()">Done, back to start</button>'}
+app.innerHTML=h;if(c.step===2){var el=document.getElementById('actedit');if(el)el.focus()}}
+function g_text(){var g=gID(c.dim);return g.sg[c.act]?g.sg[c.act].t.replace(/\.$/,''):''}
+function copyCommit(){var g=gID(c.dim),txt='I\'m becoming '+(IDENT[g.k]||'someone who makes room for this')+'.\nAfter '+c.anchor+', I will '+c.action+'.'+(c.who?'\nWho might notice: '+c.who:'');try{navigator.clipboard.writeText(txt);var m=document.getElementById('okmsg');if(m)m.textContent='Copied.'}catch(e){var m=document.getElementById('okmsg');if(m)m.textContent='Select the text above to copy it.'}}
+function draw(){
+if(n==='commit'){commitDraw();return}
+if(n==='lib'){library();return}
+if(n<0){app.innerHTML='<h1>LifeReady</h1><p class="m">More of what matters.</p><p>A few years ago I found myself standing at the edge of my own next chapter, and it made me realise something I probably knew all along: we spend so much energy preparing for work, and so little preparing for what comes after it, or even for staying balanced while we are still in it.</p><p>Work matters. It is a meaningful part of how our society holds together. But it was never meant to be the whole picture, and keeping a real sense of balance, personal balance, is what actually sets us up to enjoy life, not just get through it.</p><p>The dimensions in LifeReady are the ones this journey has shown me matter most. I hope spending a few minutes with them helps you notice one small thing you could do differently today, and if it helps even one person become a little more aware of what matters to them, it will have done its job.</p><p class="m s">This takes about five minutes and helps you see what matters most, and what deserves more room.</p><div class="card s"><b>Private by design.</b> Your answers stay on this screen. Nothing is saved or sent anywhere. Skip anything you like.</div><button class="btn" onclick="go(1)">Start</button><br><button class="link" onclick="n=\'lib\';draw()">Just want to read the ideas first?</button>';return}
+if(n>=steps.length){return result()}
+var s=steps[n],h='<div class="bar"><i style="width:'+Math.round(n/steps.length*100)+'%"></i></div>';
+if(s.t==='shape')h+='<h2>How do you picture work in your next chapter?</h2><p class="m s">Pick the closest. You can change your mind later.</p>'+opts('shape',SHAPE)+nav(a.shape);
+if(s.t==='hor')h+='<h2>When might things start to change?</h2>'+opts('hor',HOR)+nav(a.hor);
+if(s.t==='give')h+='<h2>What does work give you today, besides a pay cheque?</h2><p class="m s">Choose all that apply.</p>'+opts('give',GIVE,1)+nav(a.give.length);
+if(s.t==='keep')h+='<h2>Which of these would you most want to keep in some form?</h2><p class="m s">Choose up to three.</p>'+opts('keep',a.give,1)+nav(a.keep.length);
+if(s.t==='ing'){var g=ING[s.i],k=g.k;h+='<p class="m s">'+g.e+' '+g.n+'</p><h2>'+g.q+'</h2><p class="m s">'+g.h+'</p>';if(g.why)h+='<p>'+g.why+'</p>';if(!g.noNote)h+='<textarea class="note" id="noteedit" placeholder="Jot down whatever comes to mind. Leaving it blank is fine, and tells you something too." oninput="a[\''+k+'N\']=this.value">'+(a[k+'N']||'')+'</textarea>';
+if(k==='resilience'){h+='<div class="scale" style="grid-template-columns:repeat(4,1fr)">'+MOODFREQ.map(function(o){return '<button class="'+(a.mood===o?'on':'')+'" aria-pressed="'+(a.mood===o)+'" onclick="sel(\'mood\',\''+o+'\')">'+o+'</button>'}).join('')+'</div>';h+='<h3>How much does looking after this matter to you?</h3>'+scale(k+'I','Not much','Essential');if(g.mq)h+='<h3>'+g.mq+'</h3>'+opts(k+'M',g.mo);h+=nav(a[k+'I']&&a.mood)}
+else{h+='<h3>How much does this matter to you?</h3>'+scale(k+'I','Not much','Essential')+'<h3>'+(g.s||'How much room does it get in your life now?')+'</h3>'+scale(k+'S','Almost none','Plenty');if(g.mq)h+='<h3>'+g.mq+'</h3>'+opts(k+'M',g.mo);h+=nav(a[k+'I']&&a[k+'S'])}}
+if(s.t==='move')h+='<h2>What kind of movement appeals to you?</h2><p class="m s">Choose any. Pick what you would actually keep doing.</p>'+opts('like',MOVE,1)+'<h3>How often do you move in ways you enjoy?</h3>'+opts('freq',FREQ)+'<h3>Could you comfortably carry groceries up two flights of stairs today?</h3>'+opts('func',['Yes, easily','With some effort','Not really'])+nav(a.freq);
+if(s.t==='food')h+='<h2>Which best describes how you eat day to day?</h2><p class="m s">Research on the world\u2019s longest-lived communities, the so-called Blue Zones, points to simple patterns: mostly whole, minimally processed, plant-forward food, eaten until satisfied rather than full. Doctors and researchers studying ultra-processed food increasingly flag it as worth watching, not because any single food is harmful, but because diets built mostly around it are linked to poorer health over time. This is about awareness, not restriction.</p>'+opts('food',FOOD)+'<h3>How often do you check what is actually in packaged food you eat?</h3>'+opts('label',['Often','Sometimes','Rarely or never'])+nav(a.food);
+if(s.t==='money')h+='<h2>Do you feel financially prepared to make choices about how much you work and how you live?</h2><p class="m s">No numbers needed.</p>'+opts('money',['Yes','Not yet','Unsure'])+nav(a.money);
+app.innerHTML=h}
+function result(){
+var r=ING.map(function(g){var sv=g.k==='resilience'?(MOODSPACE[a.mood]||0):(a[g.k+'S']||0);return {g:g,i:a[g.k+'I']||0,s:sv,d:(a[g.k+'I']||0)-sv,answered:(g.k==='resilience'?(a[g.k+'I']&&a.mood):(a[g.k+'I']&&a[g.k+'S']))}}).filter(function(x){return x.answered});
+var sorted=r.slice().sort(function(x,y){return y.d-x.d});
+var top=sorted.filter(function(x){return x.d>=2}).slice(0,3);
+var rest=sorted.filter(function(x){return top.indexOf(x)<0});
+var h='<h1>Your life map</h1><p class="m">What matters, how much room it gets, and what you told us along the way. This is a starting point, not a score.</p>';
+h+='<h3>Worth exploring</h3>';
+h+=top.length?top.map(function(x){var blank=!x.g.noNote&&!(a[x.g.k+'N']&&a[x.g.k+'N'].trim());var echo=echoLine(x.g);return '<div class="card"><b>'+x.g.e+' '+x.g.n+'</b>'+bars(x.g,x.i,x.s)+'<div class="why">'+reason(x.g,x.d)+'</div>'+(echo?'<div class="echo">'+echo+'</div>':'')+(blank?'<div class="blank">You left the notes blank here. That gap on the page can be its own kind of answer, a sign this is an area worth thinking through.</div>':(x.g.noNote?'':noteBlock(x.g)))+pick(x.g).map(suggCard).join('')+'</div>'}).join(''):'<div class="card">What matters to you and what gets room look fairly well matched across the board. Small experiments can still show what you would like more of.</div>';
+if(rest.length){h+='<h3>Everything else, at a glance</h3><div class="card">'+rest.map(function(x){var echo=echoLine(x.g);return '<div class="lite"><b>'+x.g.e+' '+x.g.n+'</b>'+bars(x.g,x.i,x.s)+(echo?'<div class="m s" style="margin-top:4px">'+echo+'</div>':'')+(x.g.noNote?'':noteBlock(x.g))+'</div>'}).join('')+'<div class="key">Teal: how much it matters. Gold: how much room it gets.</div></div>'}
+if((a.mood==='Often'||a.mood==='Most days'))h+='<div class="card"><b>Looking after yourself</b><br>Feeling low or overwhelmed often is common during big changes, and it is worth taking seriously. A GP is a good first step. In Australia you can also contact Beyond Blue (1300 22 4636) or Lifeline (13 11 14, 24 hours). If you ever feel unsafe, call 000.</div>';
+if(a.give.length){h+='<h3>What work gives you</h3><p>'+a.give.map(function(x){return '<span class="pill">'+x+'</span>'}).join('')+'</p>';
+if(a.keep.length)h+='<div class="card">You most want to keep <b>'+a.keep.join(', ')+'</b>. If work shrinks, here is where each could come from:'+a.keep.map(function(x){return '<h3>'+x+'</h3><ul>'+(IDEAS[x]||[]).map(function(idea){return '<li>'+idea+'</li>'}).join('')+'</ul>'}).join('')+'</div>'}
+var si=SHAPE.indexOf(a.shape);
+if(si>-1)h+='<h3>Try something small</h3><div class="card"><b>For your next chapter</b><br>'+SHT[si]+'</div>';
+if(a.money&&a.money!=='Yes')h+='<h3>Money</h3><div class="card">Money looks worth getting clarity on. LifeReady does not give financial advice. MoneySmart (moneysmart.gov.au) and a licensed financial adviser are good places to start.</div>';
+h+='<h3>Turn this into action</h3><div class="card">Insight fades fast. Picking one thing and anchoring it to something you already do makes it far more likely to stick.</div><button class="btn" onclick="c={dim:\''+(top[0]?top[0].g.k:ING[0].k)+'\',step:0};n=\'commit\';draw()">Build my commitment</button><br>';
+h+='<h3>Want more?</h3><button class="link" onclick="n=\'lib\';draw()">Browse the full awareness idea library</button><br>';
+h+='<button class="btn" onclick="a={give:[],keep:[],like:[]};n=-1;draw()">Start again</button>';
+app.innerHTML=h}
+draw();
+</script>
+</body></html>
