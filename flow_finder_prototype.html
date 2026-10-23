@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flow Finder | Discover what makes you feel alive</title>
+<style>
+:root{--ink:#23312e;--muted:#687773;--paper:#f7f6f0;--card:#fffefa;--line:#e2e5dc;--green:#365f50;--green2:#dce9df;--gold:#d5a653;--soft:#edf1e9;--shadow:0 18px 55px rgba(35,49,46,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,textarea{font:inherit}button{cursor:pointer}
+.shell{max-width:880px;margin:0 auto;padding:24px 20px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:4px 0 42px}.brand{display:flex;align-items:center;gap:10px;font-weight:750;letter-spacing:-.03em}.mark{width:36px;height:36px;border-radius:12px;background:var(--green);display:grid;place-items:center;color:white;font-size:19px}.tag{color:var(--muted);font-size:13px}
+.hero{padding:12px 0 26px}.eyebrow{color:var(--green);font-size:12px;text-transform:uppercase;letter-spacing:.14em;font-weight:800}.hero h1{font-size:clamp(38px,7vw,66px);line-height:1.02;letter-spacing:-.055em;margin:14px 0 18px;max-width:700px}.hero p{font-size:18px;color:#53635e;max-width:620px;margin:0}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:clamp(22px,5vw,42px);margin-top:24px}.stephead{display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--muted);font-size:13px;margin-bottom:12px}.progress{height:5px;background:#e9ece4;border-radius:10px;overflow:hidden;margin-bottom:30px}.bar{height:100%;background:var(--green);width:0;transition:width .25s}.question{font-size:clamp(25px,4vw,34px);line-height:1.15;letter-spacing:-.035em;margin:0 0 10px}.hint{color:var(--muted);margin:0 0 24px}.fieldlabel{display:block;font-weight:700;margin:22px 0 9px}.textinput{width:100%;border:1px solid #d9ded5;border-radius:13px;padding:14px 15px;background:#fffefa;color:var(--ink);outline:none}.textinput:focus{border-color:var(--green);box-shadow:0 0 0 3px #dce9df}.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.choice{border:1px solid var(--line);border-radius:14px;background:#fffefa;padding:14px;text-align:left;color:var(--ink);min-height:64px;display:flex;gap:10px;align-items:flex-start;transition:.15s}.choice:hover{border-color:#9db6a4}.choice.selected{background:var(--green2);border-color:var(--green);box-shadow:inset 0 0 0 1px var(--green)}.choice .symbol{font-size:20px;line-height:1.2}.choice strong{display:block;font-size:14px}.choice small{display:block;color:var(--muted);margin-top:3px;font-size:12px;line-height:1.35}.actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:30px}.btn{border:0;border-radius:999px;padding:13px 21px;font-weight:750}.primary{background:var(--green);color:white}.primary:hover{background:#294b3f}.secondary{background:transparent;color:var(--green);border:1px solid var(--line)}.primary:disabled{opacity:.35;cursor:not-allowed}.note{font-size:12px;color:var(--muted);margin-top:18px}.hidden{display:none!important}.resulttop{background:var(--green);color:white;border-radius:18px;padding:25px;margin-bottom:22px}.resulttop .eyebrow{color:#d6e8d9}.resulttop h2{font-size:clamp(30px,5vw,45px);line-height:1.05;letter-spacing:-.04em;margin:9px 0}.resulttop p{color:#e0e9e2;margin:0;max-width:640px}.resultgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.resultcard{border:1px solid var(--line);border-radius:16px;padding:18px;background:#fffefa}.resultcard h3{font-size:16px;margin:0 0 8px}.resultcard p{font-size:14px;color:#53635e;margin:0}.pill{display:inline-block;background:var(--soft);color:var(--green);padding:5px 9px;border-radius:999px;font-size:12px;font-weight:750;margin:4px 4px 0 0}.plan{background:#f1f0e7;border-radius:16px;padding:20px;margin-top:18px}.plan h3{margin:0 0 7px}.plan p{margin:0 0 12px;color:#53635e}.footer{display:flex;justify-content:space-between;gap:12px;align-items:center;color:var(--muted);font-size:12px;margin-top:24px}.smalllink{border:0;background:none;color:var(--green);text-decoration:underline;padding:4px}
+@media(max-width:560px){.shell{padding:16px 14px 40px}.top{margin-bottom:28px}.tag{display:none}.choices,.resultgrid{grid-template-columns:1fr}.panel{border-radius:18px}.choice{min-height:56px}.actions{align-items:stretch}.actions .btn{padding:12px 15px}.hero p{font-size:16px}}
+@media print{body{background:white}.shell{max-width:none;padding:0}.top,.hero,.stephead,.progress,.actions,.footer,.note{display:none!important}.panel{border:0;box-shadow:none;padding:0}.resulttop{background:#e8eee8;color:var(--ink)}.resulttop p,.resulttop .eyebrow{color:var(--ink)}.resultcard,.plan{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="top">
+    <div class="brand"><span class="mark">✳</span><span>flow finder</span></div>
+    <div class="tag">A small journey towards a more fulfilling life</div>
+  </header>
+  <section class="hero" id="intro">
+    <div class="eyebrow">A personal discovery experience</div>
+    <h1>Find what makes you feel <em>alive.</em></h1>
+    <p>Remember the moments when you were absorbed, curious, energised or quietly content. Discover what they might have in common, then choose one small way to make room for more of them.</p>
+    <div style="margin-top:24px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <button class="btn primary" id="startBtn">Start my discovery <span aria-hidden="true">→</span></button>
+      <span class="tag">About 5–8 minutes · No right answers</span>
+    </div>
+  </section>
+
+  <main class="panel hidden" id="quiz" aria-live="polite">
+    <div class="stephead"><span id="stepLabel">STEP 1 OF 5</span><span id="stepName">Remember</span></div>
+    <div class="progress"><div class="bar" id="bar"></div></div>
+    <div id="questionArea"></div>
+    <div class="actions">
+      <button class="btn secondary" id="backBtn">← Back</button>
+      <button class="btn primary" id="nextBtn">Continue →</button>
+    </div>
+    <div class="note">Your answers stay in this browser session. This prototype doesn't send them to a server.</div>
+  </main>
+
+  <main class="panel hidden" id="results">
+    <div class="resulttop">
+      <div class="eyebrow">Your first Flow Map</div>
+      <h2 id="resultTitle">Your pattern is taking shape.</h2>
+      <p id="resultIntro"></p>
+    </div>
+    <div class="eyebrow" style="margin-bottom:12px">Themes to explore</div>
+    <div class="resultgrid" id="themeCards"></div>
+    <div class="plan">
+      <div class="eyebrow">Your next small experiment</div>
+      <h3 id="planTitle">Make room for one meaningful moment</h3>
+      <p id="planText"></p>
+      <label class="fieldlabel" for="commitment" style="margin-top:14px">When could you try it?</label>
+      <input class="textinput" id="commitment" placeholder="e.g. Saturday morning, or 20 minutes on Tuesday">
+      <label class="fieldlabel" for="reflection">What would you like to notice?</label>
+      <textarea class="textinput" id="reflection" rows="3" placeholder="How did it feel? What absorbed you? What did you get from it?"></textarea>
+    </div>
+    <div class="actions">
+      <button class="btn secondary" id="restartBtn">Start again</button>
+      <button class="btn primary" id="printBtn">Save / print my Flow Map ↗</button>
+    </div>
+    <p class="note">This is a reflective tool, not a validated psychological assessment. Themes are possibilities to explore, not labels or diagnoses. Flow can be one source of fulfilment, alongside rest, relationships, meaning and ordinary enjoyment.</p>
+  </main>
+  <div class="footer"><span>Flow Finder · Early prototype</span><span>Curiosity over certainty.</span></div>
+</div>
+<script>
+const steps = [
+ {name:"Remember",title:"Think of a moment when you felt absorbed.",hint:"It doesn't need to be impressive. It could be a ride, a conversation, making something, helping someone, learning or being outdoors.",type:"memory"},
+ {name:"Notice",title:"What did that experience give you?",hint:"Choose up to three that feel closest. Think about the experience itself, not what you think you should choose.",type:"benefits"},
+ {name:"Engagement",title:"What happens when you're really into something?",hint:"There are no correct answers. Different experiences can feel different.",type:"engagement"},
+ {name:"Meaning",title:"What draws you back to activities like this?",hint:"Choose the strongest pull, even if more than one feels true.",type:"motivation"},
+ {name:"Make room",title:"What would you like more room for?",hint:"Choose one direction to explore. You can change your mind after trying it.",type:"future"}
+];
+const data = {memory:"",benefits:[],engagement:[],motivation:"",future:""};
+let current=0;
+const benefits=[
+ ["calm","🌿","Calm and mental space","Less noise, more perspective"],
+ ["challenge","⛰️","Challenge and progress","Stretching yourself and improving"],
+ ["curiosity","🔎","Curiosity and discovery","Exploring, learning, noticing"],
+ ["creation","🛠️","Making and creating","Turning an idea into something real"],
+ ["connection","🤝","Connection","Sharing an experience or feeling understood"],
+ ["contribution","💛","Contribution","Helping or making a difference"],
+ ["nature","🌤️","Nature and freedom","Being outdoors or away from demands"],
+ ["play","🎈","Play and enjoyment","Doing something simply because it feels good"]
+];
+const engagements=[
+ ["time","⏳","I lose track of time"],
+ ["focus","🎯","My attention feels clear"],
+ ["energy","⚡","I feel energised"],
+ ["peace","🫧","I feel calmer"],
+ ["progress","📈","I can see myself improving"],
+ ["connection","💬","I feel close to others"]
+];
+const motivations=[
+ ["activity","🌱","The activity itself feels rewarding"],
+ ["mastery","🧗","I enjoy getting better at something"],
+ ["people","🫶","I enjoy sharing it with others"],
+ ["purpose","🌍","I like knowing it matters"],
+ ["discovery","🧭","I like exploring something new"]
+];
+const futures=[
+ ["return","↩️","Reconnect with something I've stopped doing","Bring back an interest that got squeezed out."],
+ ["deepen","🌿","Make more room for something I already love","Give an existing source of energy more space."],
+ ["learn","🔎","Try something new","Run a small experiment without needing to be good at it."],
+ ["people","🤝","Find people to do things with","Add connection, community or shared purpose."],
+ ["contribute","💛","Use my time to help or teach","Explore mentoring, volunteering or sharing a skill."],
+ ["space","☁️","Create more quiet and breathing room","Protect unhurried time for reflection and recovery."]
+];
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function choiceButton(item,group,multi=false){
+ const [v,icon,title,desc]=item;const selected=multi?data[group].includes(v):data[group]===v;
+ return `<button type="button" class="choice ${selected?'selected':''}" data-group="${group}" data-value="${v}" aria-pressed="${selected}"><span class="symbol">${icon}</span><span><strong>${title}</strong>${desc?`<small>${desc}</small>`:""}</span></button>`;
+}
+function render(){
+ const s=steps[current];document.getElementById("stepLabel").textContent=`STEP ${current+1} OF ${steps.length}`;
+ document.getElementById("stepName").textContent=s.name;document.getElementById("bar").style.width=`${(current+1)/steps.length*100}%`;
+ let content=`<h2 class="question">${s.title}</h2><p class="hint">${s.hint}</p>`;
+ if(s.type==="memory") content+=`<label class="fieldlabel" for="memoryInput">Describe one moment</label><textarea class="textinput" id="memoryInput" rows="5" placeholder="Where were you? What were you doing? What made it satisfying?">${esc(data.memory)}</textarea><p class="tag" style="margin-top:10px">A few words are enough. You can also start with a small everyday moment.</p>`;
+ if(s.type==="benefits") content+=`<div class="choices">${benefits.map(x=>choiceButton(x,"benefits",true)).join("")}</div><p class="tag" style="margin-top:12px">Choose up to three.</p>`;
+ if(s.type==="engagement") content+=`<div class="choices">${engagements.map(x=>choiceButton(x,"engagement",true)).join("")}</div><p class="tag" style="margin-top:12px">Choose all that often fit.</p>`;
+ if(s.type==="motivation") content+=`<div class="choices">${motivations.map(x=>choiceButton(x,"motivation")).join("")}</div>`;
+ if(s.type==="future") content+=`<div class="choices">${futures.map(x=>choiceButton(x,"future")).join("")}</div>`;
+ document.getElementById("questionArea").innerHTML=content;
+ document.getElementById("backBtn").style.visibility=current===0?"hidden":"visible";
+ document.getElementById("nextBtn").textContent=current===steps.length-1?"Create my Flow Map →":"Continue →";
+ document.getElementById("nextBtn").disabled=!valid();
+ document.querySelectorAll(".choice").forEach(b=>b.addEventListener("click",()=>{
+   const g=b.dataset.group,v=b.dataset.value;
+   if(["benefits","engagement"].includes(g)){let arr=data[g];if(arr.includes(v))data[g]=arr.filter(x=>x!==v);else if(g==="benefits"&&arr.length<3)data[g]=[...arr,v];else if(g==="engagement")data[g]=[...arr,v];}
+   else data[g]=v;
+   render();
+ }));
+ const mi=document.getElementById("memoryInput");if(mi)mi.addEventListener("input",e=>{data.memory=e.target.value;document.getElementById("nextBtn").disabled=!valid()});
+}
+function valid(){const t=steps[current].type;if(t==="memory")return data.memory.trim().length>=3;if(t==="benefits")return data.benefits.length>0;if(t==="engagement")return data.engagement.length>0;if(t==="motivation")return !!data.motivation;return !!data.future;}
+document.getElementById("startBtn").onclick=()=>{document.getElementById("intro").classList.add("hidden");document.getElementById("quiz").classList.remove("hidden");current=0;render();window.scrollTo({top:0,behavior:"smooth"})};
+document.getElementById("backBtn").onclick=()=>{if(current>0){current--;render()}};
+document.getElementById("nextBtn").onclick=()=>{if(!valid())return;if(current<steps.length-1){current++;render()}else showResults();};
+function showResults(){
+ document.getElementById("quiz").classList.add("hidden");document.getElementById("results").classList.remove("hidden");
+ const b=data.benefits;const top=b.slice(0,2).map(v=>benefits.find(x=>x[0]===v)).filter(Boolean);
+ const names=top.map(x=>x[2].toLowerCase());
+ let title="Your pattern is taking shape";
+ if(b.includes("calm")&&b.includes("nature"))title="Space to breathe and reset";
+ else if(b.includes("challenge")||data.motivation==="mastery")title="Engagement through challenge";
+ else if(b.includes("connection")||data.motivation==="people")title="Meaning through connection";
+ else if(b.includes("creation"))title="Energy through making and creating";
+ else if(b.includes("curiosity")||data.motivation==="discovery")title="Curiosity is calling";
+ else if(b.includes("contribution")||data.motivation==="purpose")title="A pull towards contribution";
+ document.getElementById("resultTitle").textContent=title;
+ let intro="Your answers suggest a few ingredients worth paying attention to: "+(names.length?names.join(" and "):"the experiences you described")+". Treat these as clues to test in real life, not a fixed description of who you are.";
+ if(data.memory.trim())intro+=" The moment you described is a useful starting point: “"+data.memory.trim().slice(0,190)+(data.memory.trim().length>190?"…":"")+"”";
+ document.getElementById("resultIntro").textContent=intro;
+ const all=[...new Set([...b,...data.engagement])];
+ const cards=all.slice(0,4).map(v=>{const item=benefits.find(x=>x[0]===v)||engagements.find(x=>x[0]===v);if(!item)return "";return `<article class="resultcard"><h3>${item[1]} ${item[2]}</h3><p>${explain(v)}</p></article>`}).join("");
+ document.getElementById("themeCards").innerHTML=cards||`<article class="resultcard"><h3>🌱 A clue to follow</h3><p>Notice what you remember most vividly from your experience and try another activity with a similar feeling.</p></article>`;
+ const f=futures.find(x=>x[0]===data.future);
+ document.getElementById("planTitle").textContent=f[2];document.getElementById("planText").textContent=f[3]+" Keep it small: choose one activity, make a specific time for it, then notice how you feel before, during and afterwards.";
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function explain(v){const map={calm:"Make room for experiences that reduce mental noise or help you regain perspective.",challenge:"Look for a satisfying stretch: enough difficulty to engage you, with room to learn and improve.",curiosity:"Follow questions, explore unfamiliar places or learn something without needing an immediate outcome.",creation:"Give yourself time to make, repair, cook, build, write or bring an idea into the world.",connection:"Notice which people and shared experiences leave you feeling understood or more connected.",contribution:"Explore ways to help, teach, mentor or make a useful difference.",nature:"Try movement, outdoor time or a change of scene that gives you breathing room.",play:"Protect activities that are enjoyable in their own right, without turning them into another performance target.",time:"Notice which activities absorb you enough that time seems to pass differently.",focus:"Explore tasks that help your attention settle on one thing at a time.",energy:"Notice which experiences leave you feeling more alive or ready to engage.",peace:"Pay attention to activities that help you feel settled, even if they are not challenging.",progress:"Choose activities where feedback helps you notice gradual improvement.",connection:"Look for experiences where attention and connection with others become stronger."};return map[v]||"Treat this as a clue. Try it, then reflect on what you notice."}
+document.getElementById("restartBtn").onclick=()=>{Object.assign(data,{memory:"",benefits:[],engagement:[],motivation:"",future:""});current=0;document.getElementById("results").classList.add("hidden");document.getElementById("intro").classList.remove("hidden");document.getElementById("commitment").value="";document.getElementById("reflection").value="";window.scrollTo({top:0,behavior:"smooth"})};
+document.getElementById("printBtn").onclick=()=>window.print();
+</script>
+</body>
+</html>
